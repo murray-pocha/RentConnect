@@ -8,6 +8,7 @@
   top: 10em;
   height: calc(100vh - 10em);
   background-color: #388697;
+  border-left: #ffffff solid 10px;
 }
 
 .sidenav_button {
@@ -16,6 +17,8 @@
   align-items: center;
   justify-content: center;
   gap: 1em;
+  padding: 1em;
+  border-radius: 5px;
 }
 
 .sidenav_button:hover {
