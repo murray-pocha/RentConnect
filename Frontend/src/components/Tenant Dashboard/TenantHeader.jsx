@@ -3,6 +3,7 @@ import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import StarRating from "../StarRating"
 
 function TenantHeader() {
   return (
@@ -14,13 +15,7 @@ function TenantHeader() {
         <div className="header_user_info">
           <div className="user_info">
             <h1>Tenant Name</h1>
-            <div className="rating">
-              <StarRateRoundedIcon className="star_icon star filled" sx={{fontSize: 30}} />
-              <StarRateRoundedIcon className="star_icon star filled" sx={{fontSize: 30}} />
-              <StarRateRoundedIcon className="star_icon star filled" sx={{fontSize: 30}} />
-              <StarRateRoundedIcon className="star_icon star filled" sx={{fontSize: 30}} />
-              <StarOutlineRoundedIcon className="star_icon star filled" sx={{fontSize: 30}} />
-            </div>
+            <StarRating />
             <h3>( Average 4.4 from 6 reviews )</h3>
             <h2 className="location">Edmonton, AB</h2>
           </div>
