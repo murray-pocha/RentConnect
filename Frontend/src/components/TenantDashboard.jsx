@@ -5,8 +5,15 @@ import Sidenav from "./Sidenav";
 function TenantDashboard() {
   return (
     <>
-      <Header />
-        <h1>Dashboard</h1>
+      <Header/>
+        <div>
+          <div className="dashboard_header">
+            <div className="header_background"></div>
+            <div className=""></div>
+          </div>
+          <h1>Tenant Dashboard</h1>
+        </div>
+
       <Sidenav />
     </>
   )
