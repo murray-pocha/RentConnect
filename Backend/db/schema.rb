@@ -10,12 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema[7.1].define(version: 2025_04_05_010305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-=======
 ActiveRecord::Schema[7.1].define(version: 2025_04_05_155008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +46,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_05_155008) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
->>>>>>> feature/act_storage
   create_table "rental_properties", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -80,10 +77,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_05_155008) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-<<<<<<< HEAD
-=======
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
->>>>>>> feature/act_storage
   add_foreign_key "rental_properties", "users"
 end
