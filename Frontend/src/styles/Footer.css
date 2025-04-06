@@ -1,0 +1,12 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.iconLink {
+  margin: .5em;
+  size: 5px;
+}
