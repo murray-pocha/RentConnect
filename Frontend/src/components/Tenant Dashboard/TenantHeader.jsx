@@ -17,7 +17,7 @@ function TenantHeader({rating}) {
             <StarRating 
             rating={rating}
             />
-            <h3>`( Average ${rating} from 6 reviews )`</h3>
+            <h3>( Average {rating} from 6 reviews )</h3>
             <h2 className="location">Edmonton, AB</h2>
           </div>
           <div className="header_icons">

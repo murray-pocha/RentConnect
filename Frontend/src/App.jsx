@@ -19,7 +19,7 @@ function App() {
 
   const [activePage, setActivePage] = useState(pages.tenantProfile)
 
-  const rating = Math.round(4 || 0)
+  const rating = 4.4 || 0
 
   return (
     loggedIn ? 
