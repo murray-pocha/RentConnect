@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../styles/Sidenav.css"
-import MyprofBtn from "./MyProfBtn";
-import ViewPropertyBtn from "./ViewPropertyBtn";
-import AccountSettingsBtn from "./AccountSettingsBtn";
+import MyprofBtn from "./Button Components/MyProfBtn";
+import ViewPropertyBtn from "./Button Components/ViewPropertyBtn";
+import AccountSettingsBtn from "./Button Components/AccountSettingsBtn";
 
 function Sidenav({activePage, setActivePage, pages}) {
 
