@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import LoginPage from './components/LoginPage'
 import TenantDashboard from './components/TenantDashboard'
+import { useState } from 'react'
 
 function App() {
 
@@ -10,9 +11,21 @@ function App() {
 
   const loggedIn = true //Replace with state logic to authenticate user
 
+  const pages = {
+    viewProperties: "viewProperties",
+    tenantProfile: "tenantProfile",
+    accountSettings: "accountSettings"
+  }
+
+  const [activePage, setActivePage] = useState(pages.tenantProfile)
+
   return (
     loggedIn ? 
-        <TenantDashboard />
+        <TenantDashboard 
+        pages={pages}
+        activePage={activePage}
+        setActivePage={setActivePage}
+        />
       :
         <LoginPage />
       )
