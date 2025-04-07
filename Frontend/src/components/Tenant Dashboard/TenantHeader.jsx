@@ -20,8 +20,16 @@ function TenantHeader() {
             <h2 className="location">Edmonton, AB</h2>
           </div>
           <div className="header_icons">
-            <EditRoundedIcon className="header_icon" sx={{fontSize: 35}} />
-            <ShareRoundedIcon className="header_icon" sx={{fontSize: 35}} />
+            <EditRoundedIcon className="header_icon" sx={{fontSize: 35}} 
+            style={{cursor: "pointer"}}
+            onClick={() => console.log("edit page")}
+            />
+            <ShareRoundedIcon className="header_icon" sx={{fontSize: 35}}
+            style={{cursor: "pointer"}} 
+            onClick={async () => {
+              await navigator.clipboard.writeText('https://www.RentConnect.ca/tenant?my_page')
+            }}
+            />
           </div>
         </div>
       </div>

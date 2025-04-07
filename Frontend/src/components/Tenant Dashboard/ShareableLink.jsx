@@ -13,7 +13,13 @@ function ShareableLink() {
             </Box>
             <Tooltip title="Copy to clipboard">
                 <Button sx={{minWidth: '30px'}}>
-                    <ContentCopyRoundedIcon sx={{height: '20px', color: '#FFFFF'}}/>
+                    <ContentCopyRoundedIcon 
+                    style={{cursor: "pointer"}}
+                    sx={{height: '20px', color: '#FFFFF'}}
+                    onClick={async () => {
+                      await navigator.clipboard.writeText('https://www.RentConnect.ca/tenant?my_page')
+                    }}
+                    />
                 </Button>
             </Tooltip>
         </Paper>

@@ -11,7 +11,6 @@ function Sidenav({activePage, setActivePage, pages}) {
     <div className="sidenav_container">
       <MyprofBtn onClick={() => setActivePage(pages.tenantProfile)}/>
       <ViewPropertyBtn onClick={() => {
-        console.log(activePage)
         setActivePage(pages.viewProperties)}}/>
       <AccountSettingsBtn onClick={() => setActivePage(pages.accountSettings)}/>
     </div>
