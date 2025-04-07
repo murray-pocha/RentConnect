@@ -1,32 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Sidenav.css"
-import MyprofBtn from "./MyProfBtn";
-import ViewPropertyBtn from "./ViewPropertyBtn";
-import AccountSettingsBtn from "./AccountSettingsBtn";
-import MyPropertiesBtn from "./MyPropertiesBtn";
+import MyprofBtn from "./Button Components/MyProfBtn";
+import ViewPropertyBtn from "./Button Components/ViewPropertyBtn";
+import AccountSettingsBtn from "./Button Components/AccountSettingsBtn";
 
-function Sidenav() {
+function Sidenav({activePage, setActivePage, pages}) {
 
-  let isTenant = true
 
   return (
     <div className="sidenav_container">
-      {isTenant ? (
-        <>
-          <MyprofBtn />
-          <ViewPropertyBtn />
-          <AccountSettingsBtn />
-        </>
-      ) :
-
-      (
-        <>
-          <MyprofBtn />
-          <MyPropertiesBtn />
-          <AccountSettingsBtn />
-        </>
-      )
-      }
+      <MyprofBtn onClick={() => setActivePage(pages.tenantProfile)}/>
+      <ViewPropertyBtn onClick={() => {
+        setActivePage(pages.viewProperties)}}/>
+      <AccountSettingsBtn onClick={() => setActivePage(pages.accountSettings)}/>
     </div>
   )
 }
