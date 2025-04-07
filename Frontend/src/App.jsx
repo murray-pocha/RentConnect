@@ -19,12 +19,15 @@ function App() {
 
   const [activePage, setActivePage] = useState(pages.tenantProfile)
 
+  const rating = Math.round(4 || 0)
+
   return (
     loggedIn ? 
         <TenantDashboard 
         pages={pages}
         activePage={activePage}
         setActivePage={setActivePage}
+        rating={rating}
         />
       :
         <LoginPage />

@@ -4,12 +4,16 @@ import ShareableLink from "./ShareableLink";
 import Landlordreviews from "./LandLordReviews"
 import "../../styles/TenantProfilePage.css";
 
-function TenantProfilePage() {
+function TenantProfilePage({rating}) {
   return(
     <div className="tenant_profile_page">
-      <TenantHeader />
+      <TenantHeader 
+        rating={rating}
+      />
       <ShareableLink />
-      <Landlordreviews />
+      <Landlordreviews 
+        rating={rating}
+      />
     </div>
   )
 }
