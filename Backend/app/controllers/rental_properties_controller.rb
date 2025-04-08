@@ -1,5 +1,5 @@
 class RentalPropertiesController < ApplicationController
-  #before_action :set_rental_property, only: %i[show edit update destroy]
+  before_action :set_rental_property, only: %i[show update destroy]
 
   # GET /rental_properties or /rental_properties.json
   def index
@@ -45,7 +45,7 @@ class RentalPropertiesController < ApplicationController
     def set_rental_property
       @rental_property = RentalProperty.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      render json: { error: 'Rental property not found' }, status: not_found
+      render json: { error: 'Rental property not found' }, status: :not_found
     end
 
     def rental_property_params
