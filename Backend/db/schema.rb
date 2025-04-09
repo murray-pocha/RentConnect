@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_06_171640) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_08_230404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_06_171640) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_feedbacks_on_author_id"
     t.index ["recipient_id"], name: "index_feedbacks_on_recipient_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "image_url"
+    t.bigint "rental_property_id"
+    t.bigint "rental_application_id"
+    t.integer "uploaded_by_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rental_application_id"], name: "index_images_on_rental_application_id"
+    t.index ["rental_property_id"], name: "index_images_on_rental_property_id"
   end
 
   create_table "rental_applications", force: :cascade do |t|
@@ -106,6 +117,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_06_171640) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "feedbacks", "users", column: "author_id"
   add_foreign_key "feedbacks", "users", column: "recipient_id"
+  add_foreign_key "images", "rental_applications"
+  add_foreign_key "images", "rental_properties"
+  add_foreign_key "images", "users", column: "uploaded_by_id"
   add_foreign_key "rental_applications", "rental_properties"
   add_foreign_key "rental_applications", "users"
   add_foreign_key "rental_properties", "users"
