@@ -6,17 +6,15 @@
   left: 0;
 }
 
-
+#map_dashboard {
+  position:absolute;
+  top: 10em;
+  bottom: 6em;
+  left: 1em;
+  right: 0;
+}
 
 #map-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: calc(100vw - 10em);
-  height: calc(100vh - 10em);
-  bottom: 0;
-  right: 0;
-  position: fixed;
   height: 100%;
   width: 100%;
   /* temporarily set the background color so we can tell where the map container is positioned */

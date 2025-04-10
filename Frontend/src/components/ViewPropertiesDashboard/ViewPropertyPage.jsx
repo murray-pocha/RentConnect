@@ -5,7 +5,7 @@ import '../../styles/viewPropertyPage.css'
 function ViewPropertyPage () {
 
   return (
-    <div id="map_container">
+    <div id="map_dashboard">
       <h1>View Properties</h1>
       <MapContainer />
     </div>
