@@ -3,6 +3,7 @@ class RentalApplicationsController < ApplicationController
 
     # GET rental_applications
     def index
+
       @rental_applications = RentalApplication.all
   
       render json: @rental_applications.map { |app|
