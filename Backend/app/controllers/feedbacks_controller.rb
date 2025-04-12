@@ -1,4 +1,5 @@
 class FeedbacksController < ApplicationController
+    before_action :set_feedback, only: [:show]
 
     def index
         @feedbacks = Feedback.all
@@ -7,18 +8,18 @@ class FeedbacksController < ApplicationController
 
     def show
         render json: {
-      id: @feedback.id,
-      message: @feedback.message,
-      author: {
-        id: @feedback.author.id,
-        name: @feedback.author.name
-      },
-      recipient: {
-        id: @feedback.recipient.id,
-        name: @feedback.recipient.name
-      },
-      created_at: @feedback.created_at
-    }
+    id: @feedback.id,
+    message: @feedback.message,
+    author: {
+      id: @feedback.author.id,
+      full_name: "#{@feedback.author.first_name} #{@feedback.author.last_name}"
+    },
+    recipient: {
+      id: @feedback.recipient.id,
+      full_name: "#{@feedback.recipient.first_name} #{@feedback.recipient.last_name}"
+    },
+    created_at: @feedback.created_at
+  }
     end
 
     def create
@@ -45,10 +46,11 @@ class FeedbacksController < ApplicationController
     end
     private
     def set_feedback
-        @feedback = Feedback.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: "Feedback not found" }, status: :not_found
-      end
+            @feedback = Feedback.find_by(id: params[:id])
+        unless @feedback
+            render json: { error: "Feedback not found" }, status: :not_found
+        end
+    end
     
       def feedback_params
         params.require(:feedback).permit(:message, :author_id, :recipient_id)
