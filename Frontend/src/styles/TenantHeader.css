@@ -1,0 +1,42 @@
+.dashboard_header {
+  width: 90%;
+  outline: red solid 1px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.header_background {
+  height: 150px;
+  background-color: #388697;
+  border-top: #FFFFFF solid 10px;
+}
+
+.header_content {
+  display: flex;
+  justify-content: space-between;
+  gap: 5em;
+  margin-left: 3em;
+}
+
+.tenant_header_logo {
+  display: flex;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  border: black solid 1px;
+  top: -45px;
+  position: relative;
+  z-index: 1000;
+}
+
+.header_icons {
+  margin-right: 2em;
+  display: flex;
+  gap: 1em;
+}
+
+img {
+  width: 140px;
+}
