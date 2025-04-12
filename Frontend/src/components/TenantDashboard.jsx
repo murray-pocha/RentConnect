@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import Sidenav from "./Sidenav";
 import TenantProfilePage from "./Tenant Dashboard/TenantProfilePage";
-
+import RentalProperties from "./RentalProperties";
 
 function TenantDashboard({activePage, setActivePage, pages, rating}) {
   return (
@@ -12,7 +12,7 @@ function TenantDashboard({activePage, setActivePage, pages, rating}) {
         <TenantProfilePage 
         rating={rating}
         />}
-      { activePage === pages.viewProperties && <div>View Properties</div>}
+      { activePage === pages.viewProperties && <RentalProperties />}
       { activePage === pages.accountSettings && <div>Account Settings</div>}
       <Sidenav 
       pages={pages}
