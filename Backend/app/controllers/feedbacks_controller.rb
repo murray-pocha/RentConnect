@@ -6,7 +6,19 @@ class FeedbacksController < ApplicationController
     end
 
     def show
-        render json: @feedback
+        render json: {
+      id: @feedback.id,
+      message: @feedback.message,
+      author: {
+        id: @feedback.author.id,
+        name: @feedback.author.name
+      },
+      recipient: {
+        id: @feedback.recipient.id,
+        name: @feedback.recipient.name
+      },
+      created_at: @feedback.created_at
+    }
     end
 
     def create
