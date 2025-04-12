@@ -14,13 +14,6 @@
   right: 0;
 }
 
-#map-container {
-  height: 100%;
-  width: 100%;
-  /* temporarily set the background color so we can tell where the map container is positioned */
-  background-color: lightgrey;
-}
-
 .sidebar {
   background-color: rgb(35 55 75 / 90%);
   color: #fff;
@@ -34,12 +27,4 @@
   border-radius: 4px;
 }
 
-.reset-button {
-  position: absolute;
-  top: 50px;
-  z-index: 1;
-  left: 12px;
-  padding: 4px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
+MapContainer {}
