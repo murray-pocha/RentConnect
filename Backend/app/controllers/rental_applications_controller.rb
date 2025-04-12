@@ -1,7 +1,7 @@
 class RentalApplicationsController < ApplicationController
     before_action :set_rental_application, only: [:show, :update, :destroy]
 
-    # GET /api/v1/rental_applications
+    # GET rental_applications
     def index
       @rental_applications = RentalApplication.all
   
@@ -12,14 +12,14 @@ class RentalApplicationsController < ApplicationController
       }, status: :ok
     end
   
-    # GET /api/v1/rental_applications/:id
+    # GET rental_applications/:id
     def show
       render json: @rental_application.as_json.merge(
         documents: @rental_application.documents.map { |doc| url_for(doc) }
       ), status: :ok
     end
   
-    # POST /api/v1/rental_applications
+    # POST rental_applications
     def create
       @rental_application = RentalApplication.new(rental_application_params)
   
@@ -36,7 +36,7 @@ class RentalApplicationsController < ApplicationController
       end
     end
   
-    # PUT/PATCH /api/v1/rental_applications/:id
+    # PUT rental_applications/:id
     def update
       if @rental_application.update(rental_application_params)
         attach_documents
@@ -51,7 +51,7 @@ class RentalApplicationsController < ApplicationController
       end
     end
   
-    # DELETE /api/v1/rental_applications/:id
+    # DELETE rental_applications/:id
     def destroy
       @rental_application.destroy
       head :no_content
