@@ -18,6 +18,7 @@ function App() {
     tenantProfile: "tenantProfile",
     accountSettings: "accountSettings",
     myProperties: "myProperties",
+    propertyPage: "propertyPage",
   }
 
   const [activePage, setActivePage] = useState(pages.myProperties)
@@ -25,7 +26,7 @@ function App() {
   const rating = 4.4 || 0
 
   useEffect(() => {
-    
+
   })
 
   return (
