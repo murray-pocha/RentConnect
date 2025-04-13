@@ -9,7 +9,7 @@ function LeafletMapContainer() {
     
     return (
         <MapContainer
-            className='Leatlet_map'
+            className='Leaflet_map'
             style={{height: "800px"}} 
             center={[51.505, -0.09]} 
             zoom={2.25} 
