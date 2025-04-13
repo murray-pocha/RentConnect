@@ -179,7 +179,7 @@ function MyProperties({ onClick }) {
           <PropertyCard
             key={listing.id}
             listing={listing}
-            onClick={() => console.log("Property clicked:", listing.title)}
+            onClick={() => console.log("Property clicked:", listing)}
           />
         ))
       ) : (
