@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import PropertyCard from "./PropertyCard";
+import propertyPage from "./PropertyPage";
 
 function MyProperties({ onClick }) {
 

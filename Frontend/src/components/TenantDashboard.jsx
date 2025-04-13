@@ -28,7 +28,7 @@ function TenantDashboard({ activePage, setActivePage, pages, rating, isTenant })
             <TenantProfilePage rating={rating} />
           )}
 
-          {activePage === pages.myProperties && <MyProperties />}
+          {activePage === pages.myProperties && <MyProperties setActivePage={setActivePage} />}
 
           {activePage === pages.accountSettings && <div>Account Settings</div>}
         </div>
