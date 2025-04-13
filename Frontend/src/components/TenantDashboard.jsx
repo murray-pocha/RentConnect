@@ -5,22 +5,40 @@ import TenantProfilePage from "./TenantDashboard/TenantProfilePage";
 import RentalProperties from "./RentalProperties";
 import ViewPropertyPage from "./ViewPropertiesDashboard/ViewPropertyPage";
 
-function TenantDashboard({ activePage, setActivePage, pages, rating }) {
+function TenantDashboard({ activePage, setActivePage, pages, rating, isTenant }) {
   return (
     <>
       <Header />
-      {activePage === pages.tenantProfile && (
-        <TenantProfilePage rating={rating} />
+
+      {isTenant ? (
+
+        <div className="tenant_dashboard_container">
+          {activePage === pages.tenantProfile && (
+            <TenantProfilePage rating={rating} />
+          )}
+
+          {activePage === pages.viewProperties && <RentalProperties />}
+
+          {activePage === pages.accountSettings && <div>Account Settings</div>}
+        </div>
+
+    ) : (
+        <div className="tenant_dashboard_container">
+          {activePage === pages.landlordProfile && (
+            <TenantProfilePage rating={rating} />
+          )}
+
+          {activePage === pages.rentalProperties && <RentalProperties />}
+
+          {activePage === pages.accountSettings && <div>Account Settings</div>}
+        </div>
       )}
-
-      {activePage === pages.viewProperties && <RentalProperties />}
-
-      {activePage === pages.accountSettings && <div>Account Settings</div>}
 
       <Sidenav
         pages={pages}
         activePage={activePage}
         setActivePage={setActivePage}
+        isTenant={isTenant}
       />
     </>
   );

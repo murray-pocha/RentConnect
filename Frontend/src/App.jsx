@@ -11,13 +11,17 @@ function App() {
 
   const loggedIn = true //Replace with state logic to authenticate user
 
+  const isTenant = false
+
   const pages = {
     viewProperties: "viewProperties",
     tenantProfile: "tenantProfile",
-    accountSettings: "accountSettings"
+    accountSettings: "accountSettings",
+    landordProfile: "landlordProfile",
+    myProperties: "myProperties",
   }
 
-  const [activePage, setActivePage] = useState(pages.tenantProfile)
+  const [activePage, setActivePage] = useState(pages.landlordProfile)
 
   const rating = 4.4 || 0
 
@@ -28,6 +32,7 @@ function App() {
         activePage={activePage}
         setActivePage={setActivePage}
         rating={rating}
+        isTenant={isTenant}
         />
       :
         <LoginPage />
