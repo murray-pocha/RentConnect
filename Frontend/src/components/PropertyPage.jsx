@@ -7,3 +7,5 @@ function PropertyPage({ listing }) {
     <div>Property</div>
   )
 }
+
+export default PropertyPage
