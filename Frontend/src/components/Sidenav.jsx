@@ -18,8 +18,8 @@ function Sidenav({ activePage, setActivePage, pages, isTenant }) {
         </div>
       ) : (
         <div className="sidenav_container landlord">
-          <MyprofBtn onClick={() => setActivePage(pages.landlordProfile)} />
-          <MyPropertiesBtn onClick={() => setActivePage(pages.MyProperties)} />
+          <MyprofBtn onClick={() => setActivePage(pages.tenantProfile)} />
+          <MyPropertiesBtn onClick={() => setActivePage(pages.myProperties)} />
           <AccountSettingsBtn onClick={() => setActivePage(pages.accountSettings)} />
         </div>
       )}
