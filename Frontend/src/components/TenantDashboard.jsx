@@ -3,7 +3,6 @@ import Header from "./Header";
 import Sidenav from "./Sidenav";
 import TenantProfilePage from "./TenantDashboard/TenantProfilePage";
 import RentalProperties from "./RentalProperties";
-import ViewPropertyPage from "./ViewPropertiesDashboard/ViewPropertyPage";
 
 function TenantDashboard({ activePage, setActivePage, pages, rating }) {
   return (
