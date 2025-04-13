@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropertyCard from "./PropertyCard";
 
 const RentalProperties = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -156,23 +157,10 @@ const RentalProperties = () => {
       <div style={{ display: "grid", gap: "1.5rem" }}>
         {filteredListings.length > 0 ? (
           filteredListings.map((listing) => (
-            <div
-              key={listing.id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "1rem",
-                backgroundColor: "#1c1c1c",
-              }}
-            >
-              <h2>{listing.title}</h2>
-              <p>{listing.description}</p>
-              <p>
-                <strong>{listing.price}</strong> — {listing.location}
-              </p>
-              <p>Bedrooms: {listing.bedrooms}</p>
-              <p>Type: {listing.propertyType}</p>
-            </div>
+            <PropertyCard 
+            key={listing.id} 
+            listing={listing} 
+            onClick={() => console.log(listing)}/>
           ))
         ) : (
           <p>No properties match your filters.</p>

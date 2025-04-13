@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import LoginPage from './components/LoginPage'
 import TenantDashboard from './components/TenantDashboard'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function App() {
 
@@ -23,6 +23,10 @@ function App() {
   const [activePage, setActivePage] = useState(pages.myProperties)
 
   const rating = 4.4 || 0
+
+  useEffect(() => {
+    
+  })
 
   return (
     loggedIn ? 
