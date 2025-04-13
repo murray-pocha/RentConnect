@@ -3,7 +3,7 @@ import Header from "./Header";
 import Sidenav from "./Sidenav";
 import TenantProfilePage from "./TenantDashboard/TenantProfilePage";
 import RentalProperties from "./RentalProperties";
-import ViewPropertyPage from "./ViewPropertiesDashboard/ViewPropertyPage";
+import MyProperties from "./MyProperties";
 
 function TenantDashboard({ activePage, setActivePage, pages, rating, isTenant }) {
   return (
@@ -24,11 +24,11 @@ function TenantDashboard({ activePage, setActivePage, pages, rating, isTenant })
 
     ) : (
         <div className="tenant_dashboard_container">
-          {activePage === pages.landlordProfile && (
+          {activePage === pages.tenantProfile && (
             <TenantProfilePage rating={rating} />
           )}
 
-          {activePage === pages.rentalProperties && <RentalProperties />}
+          {activePage === pages.myProperties && <MyProperties />}
 
           {activePage === pages.accountSettings && <div>Account Settings</div>}
         </div>

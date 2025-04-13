@@ -17,11 +17,10 @@ function App() {
     viewProperties: "viewProperties",
     tenantProfile: "tenantProfile",
     accountSettings: "accountSettings",
-    landordProfile: "landlordProfile",
     myProperties: "myProperties",
   }
 
-  const [activePage, setActivePage] = useState(pages.landlordProfile)
+  const [activePage, setActivePage] = useState(pages.myProperties)
 
   const rating = 4.4 || 0
 
