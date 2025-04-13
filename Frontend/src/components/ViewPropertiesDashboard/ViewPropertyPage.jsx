@@ -1,5 +1,5 @@
 import React from "react";
-import MapContainer from "./MapContainer";
+import LeafletMapContainer from "./LeafletMapContainer";
 import '../../styles/viewPropertyPage.css'
 
 function ViewPropertyPage () {
@@ -7,7 +7,7 @@ function ViewPropertyPage () {
   return (
     <div id="map_dashboard">
       <h1>View Properties</h1>
-      <MapContainer />
+      <LeafletMapContainer />
     </div>
   )
 
