@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
+import LeafletMapContainer from './ViewPropertiesDashboard/LeafletMapContainer'
+import { get_all_rental_properties,
+        // get_rental_property,
+        // create_rental_property,
+        // edit_rental_property,
+        // delete_rental_property,
+      } from "../api/rentalEndpoints.js";
 
 const RentalProperties = () => {
+
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -9,64 +17,35 @@ const RentalProperties = () => {
 
   const [listings, setListings] = useState([]);
 
-  // Default mock data
-  const mockListings = [
-    {
-      id: 1,
-      title: "Modern Loft in Downtown",
-      description: "2 bed, 2 bath apartment near all amenities.",
-      price: "$1,800/mo",
-      location: "Downtown",
-      bedrooms: 2,
-      propertyType: "apartment",
-    },
-    {
-      id: 2,
-      title: "Cozy Suburban House",
-      description: "3 bed, 2 bath house with backyard.",
-      price: "$2,200/mo",
-      location: "Suburbs",
-      bedrooms: 3,
-      propertyType: "house",
-    },
-    {
-      id: 3,
-      title: "Studio Apartment",
-      description: "Open-concept studio ideal for students.",
-      price: "$1,200/mo",
-      location: "University District",
-      bedrooms: 1,
-      propertyType: "studio",
-    },
-  ];
+  const getProperties = async () => {
+    try {
+      const properties = await get_all_rental_properties();
+      console.log(properties); // Log the fetched data
+      setListings(properties); // Update the state
+    } catch (error) {
+      console.error("Failed to fetch rental properties:", error);
+    }
+  };
 
-  // Simulate fetching data from an API
   useEffect(() => {
-    // Replace this with actual API call later
-    // fetch("/api/properties")
-    //   .then((res) => res.json())
-    //   .then((data) => setListings(data))
-    //   .catch((err) => console.error("Failed to fetch listings:", err));
-
-    // Using mock data for now
-    setListings(mockListings);
+    getProperties();
   }, []);
 
   const filteredListings = listings.filter((listing) => {
     const query = searchTerm.toLowerCase();
-    const numericPrice = parseInt(listing.price.replace(/[^0-9]/g, ""));
 
     return (
       (listing.title.toLowerCase().includes(query) ||
         listing.location.toLowerCase().includes(query)) &&
-      (!minPrice || numericPrice >= parseInt(minPrice)) &&
-      (!maxPrice || numericPrice <= parseInt(maxPrice)) &&
+      (!minPrice || listing.fees >= parseInt(minPrice)) &&
+      (!maxPrice || listing.fees <= parseInt(maxPrice)) &&
       (!minBedrooms || listing.bedrooms >= parseInt(minBedrooms)) &&
-      (!selectedPropertyType || listing.propertyType === selectedPropertyType)
+      (!selectedPropertyType || listing.property_types === selectedPropertyType)
     );
   });
 
   return (
+    <div>
     <div
       style={{
         padding: "8rem 1rem 2rem 1rem",
@@ -128,9 +107,11 @@ const RentalProperties = () => {
           }}
         >
           <option value="">All Property Types</option>
-          <option value="apartment">Apartment</option>
-          <option value="house">House</option>
-          <option value="studio">Studio</option>
+          <option value="Apartment">Apartment</option>
+          <option value="House">House</option>
+          <option value="Studio">Studio</option>
+          <option value="Cabin">Cabin</option>
+          <option value="Townhouse">Townhouse</option>
         </select>
         <button
           onClick={() => {
@@ -153,7 +134,11 @@ const RentalProperties = () => {
         </button>
       </div>
 
-      <div style={{ display: "grid", gap: "1.5rem" }}>
+      <div 
+      style={{ 
+        display: "grid", 
+        gap: "1.5rem",
+        }}>
         {filteredListings.length > 0 ? (
           filteredListings.map((listing) => (
             <div
@@ -162,22 +147,25 @@ const RentalProperties = () => {
                 border: "1px solid #ccc",
                 borderRadius: "8px",
                 padding: "1rem",
-                backgroundColor: "#1c1c1c",
+                backgroundColor: "white",
               }}
             >
               <h2>{listing.title}</h2>
+              <p>{listing.address}</p>
               <p>{listing.description}</p>
               <p>
-                <strong>{listing.price}</strong> — {listing.location}
+                <strong>${listing.fees}</strong>
               </p>
               <p>Bedrooms: {listing.bedrooms}</p>
-              <p>Type: {listing.propertyType}</p>
+              <p>Type: {listing.property_types}</p>
             </div>
           ))
         ) : (
           <p>No properties match your filters.</p>
         )}
       </div>
+    </div>
+    <LeafletMapContainer listings={listings}/>
     </div>
   );
 };
