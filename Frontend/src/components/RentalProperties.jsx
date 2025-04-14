@@ -46,10 +46,10 @@ const RentalProperties = () => {
   });
 
   const handleApply = async (propertyId) => {
+    console.log("✅ handleApply triggered for property:", propertyId); // CONFIRM entry
+  
     try {
-      // TEMP USER ID - you’ll replace this with the logged-in user’s actual ID when auth is connected
-      // TODO: Replace with actual logged-in user ID once auth is in place
-      const userId = 1;
+      const userId = 1; // TEMP until auth is integrated
   
       const response = await fetch("http://localhost:3000/rental_applications", {
         method: "POST",
@@ -62,16 +62,18 @@ const RentalProperties = () => {
         }),
       });
   
+      console.log("📡 Raw fetch response:", response); // CONFIRM request fired
+  
       if (!response.ok) {
         throw new Error("Failed to apply");
       }
   
       const data = await response.json();
       alert("Application submitted!");
-      console.log(data);
+      console.log("🎉 Response from backend:", data);
     } catch (error) {
       alert("Error submitting application: " + error.message);
-      console.error("Apply error:", error);
+      console.error("❌ Apply error:", error);
     }
   };
   
@@ -171,18 +173,24 @@ const RentalProperties = () => {
         display: "grid", 
         gap: "1.5rem",
         }}>
-        {filteredListings.length > 0 ? (
-          filteredListings.map((listing) => (
-            <PropertyCard 
-            key={listing.id} 
-            listing={listing} 
-            onClick={() => console.log(listing)}
-            onApply={() => handleApply(listing.id)} // New apply-to-rent handler
-            />
-          ))
-        ) : (
-          <p>No properties match your filters.</p>
-        )}
+  {filteredListings.length > 0 ? (
+  filteredListings.map((listing) => {
+    const handleClick = () => console.log(listing);
+    const handleApplyClick = () => handleApply(listing.id);
+
+    console.log("Rendering with handleApply:", typeof handleApply);
+    return (
+      <PropertyCard
+        key={listing.id}
+        listing={listing}
+        onClick={handleClick}
+        onApply={handleApplyClick}
+      />
+    );
+  })
+) : (
+  <p>No properties match your filters.</p>
+)}
       </div>
     </div>
     <LeafletMapContainer listings={listings}/>

@@ -1,31 +1,35 @@
 import React from "react";
 
-function PropertyCard ({ listing, onApply, onClick }) {
+function PropertyCard({ listing, onApply = () => {}, onClick = () => {} }) {
+  console.log("PROPS RECEIVED in PropertyCard:", { onApply, onClick });
+  console.log("typeof onApply:", typeof onApply);
 
   return (
-            <div
-              key={listing.id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "1rem",
-                backgroundColor: "white",
-                cursor: "pointer"
-              }}
-              onClick={onClick}
-            >
-              <h2>{listing.title}</h2>
-              <p><strong>Avalability: Occupied</strong></p>
-              <p>
-                <strong>{listing.price}</strong> — {listing.location}
-              </p>
-              <p>Bedrooms: {listing.bedrooms}</p>
-              <p>Type: {listing.propertyType}</p>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        padding: "1rem",
+        backgroundColor: "white",
+        cursor: "pointer",
+      }}
+      onClick={onClick}
+    >
+      <h2>{listing.title}</h2>
+      <p>
+        <strong>Avalability: Occupied</strong>
+      </p>
+      <p>
+        <strong>{listing.price}</strong> — {listing.location}
+      </p>
+      <p>Bedrooms: {listing.bedrooms}</p>
+      <p>Type: {listing.propertyType}</p>
 
-              {/* Apply Button */}
+      {/* Apply Button */}
       <button
         onClick={(e) => {
           e.stopPropagation(); // Prevent parent click handler (onClick)
+          console.log("Apply button clicked ✅");
           onApply(); // Trigger apply action
         }}
         style={{
@@ -35,12 +39,12 @@ function PropertyCard ({ listing, onApply, onClick }) {
           color: "#fff",
           border: "none",
           borderRadius: "4px",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       >
-          Apply to Rent
-        </button>
-      </div>
+        Apply to Rent
+      </button>
+    </div>
   );
 }
 
