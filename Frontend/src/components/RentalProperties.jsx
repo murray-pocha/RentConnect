@@ -45,6 +45,37 @@ const RentalProperties = () => {
     );
   });
 
+  const handleApply = async (propertyId) => {
+    try {
+      // TEMP USER ID - you’ll replace this with the logged-in user’s actual ID when auth is connected
+      // TODO: Replace with actual logged-in user ID once auth is in place
+      const userId = 1;
+  
+      const response = await fetch("http://localhost:3000/rental_applications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rental_property_id: propertyId,
+          user_id: userId,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to apply");
+      }
+  
+      const data = await response.json();
+      alert("Application submitted!");
+      console.log(data);
+    } catch (error) {
+      alert("Error submitting application: " + error.message);
+      console.error("Apply error:", error);
+    }
+  };
+  
+
   return (
     <div>
     <div
@@ -145,7 +176,9 @@ const RentalProperties = () => {
             <PropertyCard 
             key={listing.id} 
             listing={listing} 
-            onClick={() => console.log(listing)}/>
+            onClick={() => console.log(listing)}
+            onApply={() => handleApply(listing.id)} // New apply-to-rent handler
+            />
           ))
         ) : (
           <p>No properties match your filters.</p>
