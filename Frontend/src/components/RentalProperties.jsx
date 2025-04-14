@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropertyCard from "./PropertyCard";
 import LeafletMapContainer from './ViewPropertiesDashboard/LeafletMapContainer'
 import { get_all_rental_properties,
         // get_rental_property,
@@ -141,24 +142,10 @@ const RentalProperties = () => {
         }}>
         {filteredListings.length > 0 ? (
           filteredListings.map((listing) => (
-            <div
-              key={listing.id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "1rem",
-                backgroundColor: "white",
-              }}
-            >
-              <h2>{listing.title}</h2>
-              <p>{listing.address}</p>
-              <p>{listing.description}</p>
-              <p>
-                <strong>${listing.fees}</strong>
-              </p>
-              <p>Bedrooms: {listing.bedrooms}</p>
-              <p>Type: {listing.property_types}</p>
-            </div>
+            <PropertyCard 
+            key={listing.id} 
+            listing={listing} 
+            onClick={() => console.log(listing)}/>
           ))
         ) : (
           <p>No properties match your filters.</p>
