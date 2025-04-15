@@ -3,9 +3,13 @@ class RentalPropertiesController < ApplicationController
 
   # GET /rental_properties or /rental_properties.json
   def index
-    @rental_properties = RentalProperty.all
-    render json: @rental_properties
+    if params[:user_id]
+      @rental_properties = RentalProperty.where(user_id: params[:user_id])
+    else
+      @rental_properties = RentalProperty.all
   end
+  render json: @rental_properties
+end
 
   # GET /rental_properties/1 or /rental_properties/1.json
   def show

@@ -9,12 +9,12 @@
 #   end
 
 # Clear existing data
-RentalProperty.destroy_all 
-User.destroy_all  
+RentalApplication.destroy_all
+RentalProperty.destroy_all
+User.destroy_all
 
 # Create sample users
-
-User.create!(
+admin = User.create!(
   email: "admin@example.com",
   password: "password123",
   first_name: "Admin",
@@ -22,20 +22,19 @@ User.create!(
   role: 1 # Assuming role 1 is admin
 )
 
-User.create!(
+jane = User.create!(
   email: "jane.doe@example.com",
   password: "securepass",
   first_name: "Jane",
   last_name: "Doe"
 )
 
-User.create!(
+john = User.create!(
   email: "john.smith@example.com",
   password: "anotherpass",
   first_name: "John",
   last_name: "Smith"
 )
-
 
 # Create sample rental properties
 RentalProperty.create!(
@@ -48,7 +47,7 @@ RentalProperty.create!(
   property_types: "Apartment",
   fees: 1200.00,
   utilities_included: true,
-  user_id: 1
+  user_id: jane.id # Use the variable for the user
 )
 
 RentalProperty.create!(
@@ -61,7 +60,7 @@ RentalProperty.create!(
   property_types: "House",
   fees: 2500.00,
   utilities_included: false,
-  user_id: 1
+  user_id: admin.id # Use the variable for the user
 )
 
 RentalProperty.create!(
@@ -74,7 +73,7 @@ RentalProperty.create!(
   property_types: "Studio",
   fees: 900.00,
   utilities_included: true,
-  user_id: 1
+  user_id: john.id # Use the variable for the user
 )
 
 RentalProperty.create!(
@@ -87,7 +86,7 @@ RentalProperty.create!(
   property_types: "Condo",
   fees: 3500.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin.id # Use the variable for the user
 )
 
 RentalProperty.create!(
@@ -100,97 +99,5 @@ RentalProperty.create!(
   property_types: "Cabin",
   fees: 1800.00,
   utilities_included: false,
-  user_id: 1
+  user_id: jane.id # Use the variable for the user
 )
-
-RentalProperty.create!(
-  title: "Urban Loft in the City",
-  description: "A stylish loft in the heart of the city.",
-  address: "321 Market Street, San Francisco, CA 94103",
-  sq_feet: 1000,
-  bedrooms: 1,
-  bathrooms: 1,
-  property_types: "Loft",
-  fees: 2800.00,
-  utilities_included: true,
-  user_id: 1
-)
-
-RentalProperty.create!(
-  title: "Suburban Townhouse",
-  description: "A cozy townhouse in a quiet suburban neighborhood.",
-  address: "654 Maple Avenue, Austin, TX 78701",
-  sq_feet: 1400,
-  bedrooms: 3,
-  bathrooms: 2,
-  property_types: "Townhouse",
-  fees: 2200.00,
-  utilities_included: false,
-  user_id: 1
-)
-
-RentalProperty.create!(
-  title: "Penthouse Suite",
-  description: "A luxurious penthouse suite with panoramic city views.",
-  address: "987 Skyline Blvd, Seattle, WA 98101",
-  sq_feet: 2000,
-  bedrooms: 4,
-  bathrooms: 3,
-  property_types: "Penthouse",
-  fees: 5000.00,
-  utilities_included: true,
-  user_id: 1
-)
-
-RentalProperty.create!(
-  title: "Charming Cottage",
-  description: "A charming cottage with a beautiful garden.",
-  address: "222 Rosewood Lane, Portland, OR 97201",
-  sq_feet: 1100,
-  bedrooms: 2,
-  bathrooms: 1,
-  property_types: "Cottage",
-  fees: 1500.00,
-  utilities_included: false,
-  user_id: 1
-)
-
-RentalProperty.create!(
-  title: "Modern Duplex",
-  description: "A modern duplex with spacious living areas.",
-  address: "333 Cedar Street, Denver, CO 80201",
-  sq_feet: 1600,
-  bedrooms: 3,
-  bathrooms: 2,
-  property_types: "Duplex",
-  fees: 2400.00,
-  utilities_included: true,
-  user_id: 1
-)
-
-RentalProperty.create!(
-  title: "Historic Brownstone",
-  description: "A historic brownstone with classic architecture.",
-  address: "444 Beacon Street, Boston, MA 02108",
-  sq_feet: 1800,
-  bedrooms: 3,
-  bathrooms: 2,
-  property_types: "Brownstone",
-  fees: 3200.00,
-  utilities_included: false,
-  user_id: 1
-)
-
-RentalProperty.create!(
-  title: "Cozy Basement Apartment",
-  description: "A cozy basement apartment with modern amenities.",
-  address: "555 Elmwood Drive, Philadelphia, PA 19103",
-  sq_feet: 700,
-  bedrooms: 1,
-  bathrooms: 1,
-  property_types: "Apartment",
-  fees: 800.00,
-  utilities_included: true,
-  user_id: 1
-)
-

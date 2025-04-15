@@ -25,7 +25,6 @@ function PropertyCard({ listing, onClick }) {
       <p style={{ color: "black" }}>Bedrooms: {listing.bedrooms}</p>
       <p style={{ color: "black" }}>Type: {listing.propertyType}</p>
 
-      {/* Apply Button */}
       <ApplyButton propertyId={listing.id} onClick={onClick}/>
     </div>
   );
