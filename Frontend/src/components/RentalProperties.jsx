@@ -45,6 +45,39 @@ const RentalProperties = () => {
     );
   });
 
+  const handleApply = async (propertyId) => {
+    console.log("✅ handleApply triggered for property:", propertyId); // CONFIRM entry
+  
+    try {
+      const userId = 1; // TEMP until auth is integrated
+  
+      const response = await fetch("http://localhost:3000/rental_applications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rental_property_id: propertyId,
+          user_id: userId,
+        }),
+      });
+  
+      console.log("📡 Raw fetch response:", response); // CONFIRM request fired
+  
+      if (!response.ok) {
+        throw new Error("Failed to apply");
+      }
+  
+      const data = await response.json();
+      alert("Application submitted!");
+      console.log("🎉 Response from backend:", data);
+    } catch (error) {
+      alert("Error submitting application: " + error.message);
+      console.error("❌ Apply error:", error);
+    }
+  };
+  
+
   return (
     <div>
     <div
@@ -140,16 +173,24 @@ const RentalProperties = () => {
         display: "grid", 
         gap: "1.5rem",
         }}>
-        {filteredListings.length > 0 ? (
-          filteredListings.map((listing) => (
-            <PropertyCard 
-            key={listing.id} 
-            listing={listing} 
-            onClick={() => console.log(listing)}/>
-          ))
-        ) : (
-          <p>No properties match your filters.</p>
-        )}
+  {filteredListings.length > 0 ? (
+  filteredListings.map((listing) => {
+    const handleClick = () => console.log(listing);
+    const handleApplyClick = () => handleApply(listing.id);
+
+    console.log("Rendering with handleApply:", typeof handleApply);
+    return (
+      <PropertyCard
+        key={listing.id}
+        listing={listing}
+        onClick={handleClick}
+        onApply={handleApplyClick}
+      />
+    );
+  })
+) : (
+  <p>No properties match your filters.</p>
+)}
       </div>
     </div>
     <LeafletMapContainer listings={listings}/>
