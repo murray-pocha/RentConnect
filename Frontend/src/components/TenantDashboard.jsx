@@ -30,7 +30,7 @@ function TenantDashboard({ isTenant }) {
           ) : (
             <>
               <Route index element={<TenantProfilePage rating={4.4} />} />
-              <Route path="my-properties" element={<RentalProperties />} />
+              <Route path="my-properties" element={<MyProperties />} />
               <Route path="account-settings" element={<div>Account Settings</div>} />
             </>
           )}

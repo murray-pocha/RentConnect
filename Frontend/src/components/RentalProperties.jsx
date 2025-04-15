@@ -134,7 +134,6 @@ const RentalProperties = () => {
               const handleClick = () => console.log(listing);
               const handleApplyClick = () => handleApply(listing.id);
 
-              console.log("Rendering with handleApply:", typeof handleApply);
               return (
                 <PropertyCard
                   key={listing.id}
