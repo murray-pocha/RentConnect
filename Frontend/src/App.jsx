@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Router, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import LoginPage from "./components/LoginPage";
@@ -9,7 +9,7 @@ import RentalProperties from "./components/RentalProperties";
 
 function App() {
   const loggedIn = true;
-  const isTenant = true;
+  const isTenant = false;
 
   return (
     <Routes>
