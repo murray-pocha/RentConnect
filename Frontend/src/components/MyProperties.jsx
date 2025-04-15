@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import PropertyCard from "./PropertyCard";
 import { fetchPropertiesByUser } from "../api/rentalEndpoints.js";
 import { useNavigate } from "react-router-dom";
+import AddHomeIcon from '@mui/icons-material/AddHome';
 
-function MyProperties({ onClick }) {
+function MyProperties({ isTenant }) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [minPrice, setMinPrice] = useState("");
@@ -45,7 +46,8 @@ function MyProperties({ onClick }) {
         (!minPrice || listing.fees >= parseInt(minPrice)) &&
         (!maxPrice || listing.fees <= parseInt(maxPrice)) &&
         (!minBedrooms || listing.bedrooms >= parseInt(minBedrooms)) &&
-        (!selectedPropertyType || listing.property_types === selectedPropertyType)
+        (!selectedPropertyType || listing.property_types === selectedPropertyType) &&
+        (!selectedAvailability || listing.availability === selectedAvailability)
       );
     });
 
@@ -116,8 +118,8 @@ function MyProperties({ onClick }) {
         <option value="studio">Studio</option>
       </select>
       <select
-        value={selectedPropertyType}
-        onChange={(e) => setSelectedPropertyType(e.target.value)}
+        value={selectedAvailability}
+        onChange={(e) => setSelectedAvailability(e.target.value)}
         style={{
           padding: "0.5rem",
           width: "160px",
@@ -152,10 +154,16 @@ function MyProperties({ onClick }) {
       </button>
     </div>
 
+    <AddHomeIcon 
+    style={{cursor: "pointer"}}
+    onClick={() => navigateUser("/dashboard/add-property")}
+    />
+
     <div style={{ display: "grid", gap: "1.5rem" }}>
         {filteredListings.length > 0 ? (
           filteredListings.map((listing) => (
             <PropertyCard
+              isTenant={isTenant}
               key={listing.id}
               listing={listing}
               onClick={() => navigateUser(`/dashboard/property/${listing.id}`)}
