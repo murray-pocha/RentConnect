@@ -155,7 +155,12 @@ function MyProperties({ isTenant }) {
     </div>
 
     <AddHomeIcon 
-    style={{cursor: "pointer"}}
+    style={{
+      cursor: "pointer",
+      height: "2em",
+      width: "2em",
+      margin: "1em",
+    }}
     onClick={() => navigateUser("/dashboard/add-property")}
     />
 
