@@ -1,6 +1,6 @@
 import React from "react";
 
-function ApplyButton({ onClick }) {
+function ApplyButton({ propertyId, onClick }) {
 
 const handleApply = async (propertyId) => {
   console.log("✅ handleApply triggered for property:", propertyId);
@@ -19,8 +19,6 @@ const handleApply = async (propertyId) => {
       }),
     });
 
-    console.log("📡 Raw fetch response:", response);
-
     if (!response.ok) {
       throw new Error("Failed to apply");
     }
@@ -37,11 +35,7 @@ const handleApply = async (propertyId) => {
 return (
 
     <button
-      onClick={(e) => {
-        e.stopPropagation(); // Prevent parent click handler (onClick)
-        console.log("Apply button clicked ✅");
-        handleApply(listing.id); // Trigger apply action
-      }}
+      onClick={() => handleApply(propertyId)}
       style={{
         marginTop: "1rem",
         padding: "0.5rem 1rem",
