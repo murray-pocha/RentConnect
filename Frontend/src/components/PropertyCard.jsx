@@ -12,18 +12,19 @@ function PropertyCard({ listing, onApply = () => {}, onClick = () => {} }) {
         padding: "1rem",
         backgroundColor: "white",
         cursor: "pointer",
+        color: "black", // Global fallback for all text
       }}
       onClick={onClick}
     >
-      <h2>{listing.title}</h2>
-      <p>
-        <strong>Avalability: Occupied</strong>
+      <h2 style={{ color: "black" }}>{listing.title}</h2>
+      <p style={{ color: "black" }}>
+        <strong>Availability: Occupied</strong>
       </p>
-      <p>
+      <p style={{ color: "black" }}>
         <strong>{listing.price}</strong> — {listing.location}
       </p>
-      <p>Bedrooms: {listing.bedrooms}</p>
-      <p>Type: {listing.propertyType}</p>
+      <p style={{ color: "black" }}>Bedrooms: {listing.bedrooms}</p>
+      <p style={{ color: "black" }}>Type: {listing.propertyType}</p>
 
       {/* Apply Button */}
       <button

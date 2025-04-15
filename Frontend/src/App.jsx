@@ -1,46 +1,31 @@
-import React from 'react'
-import './App.css'
-import LoginPage from './components/LoginPage'
-import TenantDashboard from './components/TenantDashboard'
-import { useState, useEffect } from 'react'
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import "./App.css";
+import LoginPage from "./components/LoginPage";
+import TenantDashboard from "./components/TenantDashboard";
+import ViewApplications from "./components/ViewApplications";
+import RentalProperties from "./components/RentalProperties";
 
 function App() {
-
-
-  //Placeholder variables to navigate the site until authentication and routes are implemented
-
-  const loggedIn = true //Replace with state logic to authenticate user
-
-  const isTenant = false
-
-  const pages = {
-    viewProperties: "viewProperties",
-    tenantProfile: "tenantProfile",
-    accountSettings: "accountSettings",
-    myProperties: "myProperties",
-    propertyPage: "propertyPage",
-  }
-
-  const [activePage, setActivePage] = useState(pages.myProperties)
-
-  const rating = 4.4 || 0
-
-  useEffect(() => {
-
-  })
+  const loggedIn = true;
+  const isTenant = true;
 
   return (
-    loggedIn ? 
-        <TenantDashboard 
-        pages={pages}
-        activePage={activePage}
-        setActivePage={setActivePage}
-        rating={rating}
-        isTenant={isTenant}
-        />
-      :
-        <LoginPage />
-      )
+    <Routes>
+      <Route
+        path="/"
+        element={loggedIn ? <Navigate to="/dashboard" /> : <LoginPage />}
+      />
+
+      {/* Nested dashboard route */}
+      <Route path="/dashboard/*" element={<TenantDashboard isTenant={isTenant} />} />
+
+      {/* Standalone route for testing if needed */}
+      <Route path="/applications" element={<ViewApplications />} />
+      <Route path="/view-properties" element={<RentalProperties />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
