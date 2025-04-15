@@ -7,6 +7,7 @@ import TenantProfilePage from "./TenantDashboard/TenantProfilePage";
 import RentalProperties from "./RentalProperties";
 import MyProperties from "./MyProperties";
 import ViewApplications from "./ViewApplications";
+import PropertyPage from "./PropertyPage";
 
 function TenantDashboard({ isTenant }) {
 
@@ -20,6 +21,7 @@ function TenantDashboard({ isTenant }) {
       <div className="tenant_dashboard_container">
         <Routes>
           {/* Tenant dashboard routes */}
+          <Route path="property/:id`" element={<PropertyPage />}/>
           {isTenant ? (
             <>
               <Route index element={<TenantProfilePage rating={4.4} />} />
@@ -31,6 +33,7 @@ function TenantDashboard({ isTenant }) {
             <>
               <Route index element={<TenantProfilePage rating={4.4} />} />
               <Route path="my-properties" element={<MyProperties />} />
+              <Route path="property/:id" element={<PropertyPage />} />
               <Route path="account-settings" element={<div>Account Settings</div>} />
             </>
           )}
