@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import PropertyCard from "./PropertyCard";
-import propertyPage from "./PropertyPage";
 import { fetchPropertiesByUser } from "../api/rentalEndpoints.js";
+import { useNavigate } from "react-router-dom";
 
 function MyProperties({ onClick }) {
 
@@ -17,7 +17,7 @@ function MyProperties({ onClick }) {
 
       const getProperties = async () => {
         try {
-          const properties = await fetchPropertiesByUser(14);
+          const properties = await fetchPropertiesByUser(14); // Replace with actual user ID
           console.log(properties);
           setListings(properties);
         } catch (error) {
@@ -28,6 +28,8 @@ function MyProperties({ onClick }) {
     // Default mock data
   
     // Simulate fetching data from an API
+
+    const navigateUser = useNavigate()
 
   
     useEffect(() => {
@@ -46,6 +48,7 @@ function MyProperties({ onClick }) {
         (!selectedPropertyType || listing.property_types === selectedPropertyType)
       );
     });
+
   return (
     <div
     style={{
@@ -150,19 +153,19 @@ function MyProperties({ onClick }) {
     </div>
 
     <div style={{ display: "grid", gap: "1.5rem" }}>
-      {filteredListings.length > 0 ? (
-        filteredListings.map((listing) => (
-          <PropertyCard
-            key={listing.id}
-            listing={listing}
-            onClick={() => console.log("Property clicked:", listing)}
-          />
-        ))
-      ) : (
-        <p>No properties match your filters.</p>
-      )}
+        {filteredListings.length > 0 ? (
+          filteredListings.map((listing) => (
+            <PropertyCard
+              key={listing.id}
+              listing={listing}
+              onClick={() => navigateUser(`/dashboard/property/${listing.id}`)}
+            />
+          ))
+        ) : (
+          <p>No properties match your filters.</p>
+        )}
+      </div>
     </div>
-  </div>
 );
 };
 

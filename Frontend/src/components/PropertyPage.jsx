@@ -1,10 +1,15 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
-function PropertyPage({ listing }) {
+function PropertyPage({}) {
+
+  const { id } = useParams()
+
+  console.log("Property ID:", id);
 
   return (
 
-    <div>Property</div>
+    <div>Property {id}</div>
   )
 }
 
