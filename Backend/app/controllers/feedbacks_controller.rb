@@ -10,6 +10,7 @@ class FeedbacksController < ApplicationController
         render json: {
     id: @feedback.id,
     message: @feedback.message,
+    rating: @feedback.rating,
     author: {
       id: @feedback.author.id,
       full_name: "#{@feedback.author.first_name} #{@feedback.author.last_name}"
@@ -53,7 +54,7 @@ class FeedbacksController < ApplicationController
     end
     
       def feedback_params
-        params.require(:feedback).permit(:message, :author_id, :recipient_id)
+        params.require(:feedback).permit(:message, :author_id, :recipient_id, :rating)
       end
     
 end
