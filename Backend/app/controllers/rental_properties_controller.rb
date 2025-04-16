@@ -1,58 +1,72 @@
 class RentalPropertiesController < ApplicationController
   before_action :set_rental_property, only: %i[show update destroy]
 
-  # GET /rental_properties or /rental_properties.json
+  # GET /rental_properties
   def index
+<<<<<<< HEAD
     if params[:user_id]
       @rental_properties = RentalProperty.where(user_id: params[:user_id])
     else
       @rental_properties = RentalProperty.all
+=======
+    @rental_properties = RentalProperty.all
+    render json: @rental_properties.as_json(methods: [:latitude, :longitude])
+>>>>>>> develop
   end
   render json: @rental_properties
 end
 
-  # GET /rental_properties/1 or /rental_properties/1.json
+  # GET /rental_properties/:id
   def show
-    render json: @rental_property
+    render json: @rental_property.as_json(methods: [:latitude, :longitude])
   end
 
-  # GET /rental_properties/new
-   def create
+  # POST /rental_properties
+  def create
     @rental_property = RentalProperty.new(rental_property_params)
-    #@rental_property.user = current_user
 
     if @rental_property.save
-      render json: @rental_property, status: :created
+      render json: @rental_property.as_json(methods: [:latitude, :longitude]), status: :created
     else
       render json: @rental_property.errors, status: :unprocessable_entity
     end
   end
 
-   # GET /rental_properties/1/edit
-
-   def update
-     if @rental_property.update(rental_property_params)
-       render json: @rental_property
-     else
-       render json: @rental_property.errors.full_messages, status: :unprocessable_entity
-     end
-   end
-
-   # DELETE /rental_properties/1 or /rental_properties/1.json
-    def destroy
-      @rental_property.destroy
-      head :no_content
+  # PATCH/PUT /rental_properties/:id
+  def update
+    if @rental_property.update(rental_property_params)
+      render json: @rental_property.as_json(methods: [:latitude, :longitude])
+    else
+      render json: @rental_property.errors.full_messages, status: :unprocessable_entity
     end
+  end
 
-    private
-    
-    def set_rental_property
-      @rental_property = RentalProperty.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: 'Rental property not found' }, status: :not_found
-    end
+  # DELETE /rental_properties/:id
+  def destroy
+    @rental_property.destroy
+    head :no_content
+  end
 
-    def rental_property_params
-      params.require(:rental_property).permit(:title, :description, :address, :sq_feet, :bedrooms, :bathrooms, :property_types, :fees, :utilities_included, :user_id)
-    end
+  private
+
+  def set_rental_property
+    @rental_property = RentalProperty.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Rental property not found' }, status: :not_found
+  end
+
+  def rental_property_params
+    params.require(:rental_property).permit(
+      :title,
+      :description,
+      :address,
+      :sq_feet,
+      :bedrooms,
+      :bathrooms,
+      :property_types,
+      :fees,
+      :utilities_included,
+      :user_id
+    )
+  end
 end
