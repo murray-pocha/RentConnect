@@ -14,8 +14,6 @@ const RentalProperties = () => {
   const getProperties = async () => {
     try {
       const properties = await get_all_rental_properties();
-      console.log("All property types returned:", properties.map(p => p.property_types));
-      console.log(properties);
       setListings(properties);
     } catch (error) {
       console.error("Failed to fetch rental properties:", error);
