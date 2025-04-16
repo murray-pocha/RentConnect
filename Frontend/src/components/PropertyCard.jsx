@@ -1,7 +1,7 @@
 import React from "react";
 import ApplyButton from "./Button Components/ApplyButton";
 
-function PropertyCard({ listing, onClick }) {
+function PropertyCard({ listing, onClick, isTenant }) {
 
   return (
     <div
@@ -25,7 +25,9 @@ function PropertyCard({ listing, onClick }) {
       <p style={{ color: "black" }}>Bedrooms: {listing.bedrooms}</p>
       <p style={{ color: "black" }}>Type: {listing.propertyType}</p>
 
+      {isTenant && (
       <ApplyButton propertyId={listing.id} onClick={onClick}/>
+        )}
     </div>
   );
 }
