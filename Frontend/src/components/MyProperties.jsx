@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import PropertyCard from "./PropertyCard";
-import propertyPage from "./PropertyPage";
+import { fetchPropertiesByUser } from "../api/rentalEndpoints.js";
+import { useNavigate } from "react-router-dom";
 
 function MyProperties({ onClick }) {
 
@@ -13,61 +14,38 @@ function MyProperties({ onClick }) {
     const [selectedAvailability, setSelectedAvailability] = useState("");
   
     const [listings, setListings] = useState([]);
+
+      const getProperties = async () => {
+        try {
+          const properties = await fetchPropertiesByUser(14); // Replace with actual user ID
+          console.log(properties);
+          setListings(properties);
+        } catch (error) {
+          console.error("Failed to fetch rental properties:", error);
+        }
+      };
   
     // Default mock data
-    const mockListings = [
-      {
-        id: 1,
-        title: "Modern Loft in Downtown",
-        description: "2 bed, 2 bath apartment near all amenities.",
-        price: "$1,800/mo",
-        location: "Downtown",
-        bedrooms: 2,
-        propertyType: "apartment",
-      },
-      {
-        id: 2,
-        title: "Cozy Suburban House",
-        description: "3 bed, 2 bath house with backyard.",
-        price: "$2,200/mo",
-        location: "Suburbs",
-        bedrooms: 3,
-        propertyType: "house",
-      },
-      {
-        id: 3,
-        title: "Studio Apartment",
-        description: "Open-concept studio ideal for students.",
-        price: "$1,200/mo",
-        location: "University District",
-        bedrooms: 1,
-        propertyType: "studio",
-      },
-    ];
   
     // Simulate fetching data from an API
-    useEffect(() => {
-      // Replace this with actual API call later
-      // fetch("/api/properties")
-      //   .then((res) => res.json())
-      //   .then((data) => setListings(data))
-      //   .catch((err) => console.error("Failed to fetch listings:", err));
+
+    const navigateUser = useNavigate()
+
   
-      // Using mock data for now
-      setListings(mockListings);
+    useEffect(() => {
+      getProperties();
     }, []);
   
     const filteredListings = listings.filter((listing) => {
       const query = searchTerm.toLowerCase();
-      const numericPrice = parseInt(listing.price.replace(/[^0-9]/g, ""));
   
       return (
         (listing.title.toLowerCase().includes(query) ||
           listing.location.toLowerCase().includes(query)) &&
-        (!minPrice || numericPrice >= parseInt(minPrice)) &&
-        (!maxPrice || numericPrice <= parseInt(maxPrice)) &&
+        (!minPrice || listing.fees >= parseInt(minPrice)) &&
+        (!maxPrice || listing.fees <= parseInt(maxPrice)) &&
         (!minBedrooms || listing.bedrooms >= parseInt(minBedrooms)) &&
-        (!selectedPropertyType || listing.propertyType === selectedPropertyType)
+        (!selectedPropertyType || listing.property_types === selectedPropertyType)
       );
     });
 
@@ -175,19 +153,19 @@ function MyProperties({ onClick }) {
     </div>
 
     <div style={{ display: "grid", gap: "1.5rem" }}>
-      {filteredListings.length > 0 ? (
-        filteredListings.map((listing) => (
-          <PropertyCard
-            key={listing.id}
-            listing={listing}
-            onClick={() => console.log("Property clicked:", listing)}
-          />
-        ))
-      ) : (
-        <p>No properties match your filters.</p>
-      )}
+        {filteredListings.length > 0 ? (
+          filteredListings.map((listing) => (
+            <PropertyCard
+              key={listing.id}
+              listing={listing}
+              onClick={() => navigateUser(`/dashboard/property/${listing.id}`)}
+            />
+          ))
+        ) : (
+          <p>No properties match your filters.</p>
+        )}
+      </div>
     </div>
-  </div>
 );
 };
 

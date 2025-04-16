@@ -3,7 +3,7 @@ import "../styles/Sidenav.css";
 import MyprofBtn from "./Button Components/MyProfBtn";
 import ViewPropertyBtn from "./Button Components/ViewPropertyBtn";
 import AccountSettingsBtn from "./Button Components/AccountSettingsBtn";
-import MyPropertiesBtn from "./Button Components/MyProperties";
+import MyProperties from "./Button Components/MyProperties";
 import MyApplicationsBtn from "./Button Components/MyApplicationsBtn"; // ✅ already imported
 
 function Sidenav({ isTenant }) {
@@ -19,7 +19,7 @@ function Sidenav({ isTenant }) {
       ) : (
         <div className="sidenav_container landlord">
           <MyprofBtn to="/dashboard" />
-          <MyPropertiesBtn to="/dashboard/my-properties" />
+          <MyProperties to="/dashboard/my-properties" />
           <AccountSettingsBtn to="/dashboard/account-settings" />
         </div>
       )}

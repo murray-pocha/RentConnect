@@ -38,38 +38,6 @@ const RentalProperties = () => {
     );
   });
 
-  const handleApply = async (propertyId) => {
-    console.log("✅ handleApply triggered for property:", propertyId);
-
-    try {
-      const userId = 1;
-
-      const response = await fetch("http://localhost:3000/rental_applications", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          rental_property_id: propertyId,
-          user_id: userId,
-        }),
-      });
-
-      console.log("📡 Raw fetch response:", response);
-
-      if (!response.ok) {
-        throw new Error("Failed to apply");
-      }
-
-      const data = await response.json();
-      alert("Application submitted!");
-      console.log("🎉 Response from backend:", data);
-    } catch (error) {
-      alert("Error submitting application: " + error.message);
-      console.error("❌ Apply error:", error);
-    }
-  };
-
   return (
     <div>
       <div
@@ -166,7 +134,6 @@ const RentalProperties = () => {
               const handleClick = () => console.log(listing);
               const handleApplyClick = () => handleApply(listing.id);
 
-              console.log("Rendering with handleApply:", typeof handleApply);
               return (
                 <PropertyCard
                   key={listing.id}

@@ -4,6 +4,7 @@ const BASE_URL = 'http://localhost:3000';
 
 const rental_property_endpoints = {
   GET_RENTAL_PROPERTIES: `${BASE_URL}/rental_properties`,
+  GET_RENTAL_PROPERTY_BY_ID: `${BASE_URL}/rental_properties`,
   // GET_RENTAL_PROPERTY: `${BASE_URL}/rental_property/:id`,
   // CREATE_RENTAL_PROPERTY: `${BASE_URL}/rental_properties/new`,
   // EDIT_RENTAL_PROPERTY: `${BASE_URL}/rental_property/:id/edit`,
@@ -16,8 +17,17 @@ export const get_all_rental_properties = async () => {
   const response = await axios.get(rental_property_endpoints.GET_RENTAL_PROPERTIES);
   return response.data;
 };
+export const fetchPropertiesByUser = async (userId) => {
+  try {
+    const response = await axios.get(`${rental_property_endpoints.GET_RENTAL_PROPERTY_BY_ID}?user_id=${userId}`);
+    console.log("Properties:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+  }
+}
 
-// const get_rental_property = async (id) => {
+// export const get_rental_property = async (id) => {
 //   const response = await axios.get(rental_property_endpoints.GET_RENTAL_PROPERTY(id));
 //   return response.data;
 // };
