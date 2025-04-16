@@ -9,7 +9,10 @@
 #   end
 
 # Clear existing data
+<<<<<<< HEAD
+=======
 Feedback.destroy_all
+>>>>>>> develop
 RentalApplication.destroy_all
 RentalProperty.destroy_all
 User.destroy_all

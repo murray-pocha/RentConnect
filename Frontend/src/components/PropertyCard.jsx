@@ -1,8 +1,7 @@
 import React from "react";
+import ApplyButton from "./Button Components/ApplyButton";
 
-function PropertyCard({ listing, onApply = () => {}, onClick = () => {} }) {
-  console.log("PROPS RECEIVED in PropertyCard:", { onApply, onClick });
-  console.log("typeof onApply:", typeof onApply);
+function PropertyCard({ listing, onClick }) {
 
   return (
     <div
@@ -26,27 +25,11 @@ function PropertyCard({ listing, onApply = () => {}, onClick = () => {} }) {
       <p style={{ color: "black" }}>Bedrooms: {listing.bedrooms}</p>
       <p style={{ color: "black" }}>Type: {listing.propertyType}</p>
 
-      {/* Apply Button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent parent click handler (onClick)
-          console.log("Apply button clicked ✅");
-          onApply(); // Trigger apply action
-        }}
-        style={{
-          marginTop: "1rem",
-          padding: "0.5rem 1rem",
-          backgroundColor: "#28a745",
-          color: "#fff",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-        }}
-      >
-        Apply to Rent
-      </button>
+      <ApplyButton propertyId={listing.id} onClick={onClick}/>
     </div>
   );
 }
+
+
 
 export default PropertyCard;
