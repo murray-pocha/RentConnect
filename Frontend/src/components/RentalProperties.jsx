@@ -28,14 +28,18 @@ const RentalProperties = () => {
 
   const filteredListings = listings.filter((listing) => {
     const query = searchTerm.toLowerCase();
+    const title = listing.title?.toLowerCase() || "";
+    const location = listing.location?.toLowerCase() || "";
 
     return (
-      (listing.title.toLowerCase().includes(query) ||
-        listing.location.toLowerCase().includes(query)) &&
+      (title.includes(query) ||
+      location.includes(query)) &&
       (!minPrice || listing.fees >= parseInt(minPrice)) &&
       (!maxPrice || listing.fees <= parseInt(maxPrice)) &&
       (!minBedrooms || listing.bedrooms >= parseInt(minBedrooms)) &&
-      (!selectedPropertyType || listing.property_types?.toLowerCase().trim() === selectedPropertyType.toLowerCase().trim())
+      (!selectedPropertyType ||
+        listing.property_types?.toLowerCase().trim() ===
+        selectedPropertyType.toLowerCase().trim())
     );
   });
 
