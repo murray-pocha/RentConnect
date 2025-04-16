@@ -12,7 +12,7 @@ class RentalPropertiesController < ApplicationController
 =======
 >>>>>>> 7c2abd8 (Frontend: Implemented property type image filtering and styling updates; Backend: Refreshed seed data with full property type coverage)
   end
-  render json: @rental_properties
+  render json: @rental_properties.as_json(methods: [:latitude, :longitude])
 end
 
   # GET /rental_properties/:id
