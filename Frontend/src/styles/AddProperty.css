@@ -1,0 +1,17 @@
+.add_property_container {
+  display: flex;
+  width: calc(100vw - 10em);
+  height: calc(100vh - 10em);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+}
+
+.grid_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1em;
+}
