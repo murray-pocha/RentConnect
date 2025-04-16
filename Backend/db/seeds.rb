@@ -9,12 +9,13 @@
 #   end
 
 # Clear existing data
-RentalProperty.destroy_all 
-User.destroy_all  
+Feedback.destroy_all
+RentalApplication.destroy_all
+RentalProperty.destroy_all
+User.destroy_all
 
 # Create sample users
-
-User.create!(
+admin_user = User.create!(
   email: "admin@example.com",
   password: "password123",
   first_name: "Admin",
@@ -22,20 +23,19 @@ User.create!(
   role: 1 # Assuming role 1 is admin
 )
 
-User.create!(
+jane_user = User.create!(
   email: "jane.doe@example.com",
   password: "securepass",
   first_name: "Jane",
   last_name: "Doe"
 )
 
-User.create!(
+john_user = User.create!(
   email: "john.smith@example.com",
   password: "anotherpass",
   first_name: "John",
   last_name: "Smith"
 )
-
 
 # Create sample rental properties
 RentalProperty.create!(
@@ -48,7 +48,7 @@ RentalProperty.create!(
   property_types: "Apartment",
   fees: 1200.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -61,7 +61,7 @@ RentalProperty.create!(
   property_types: "House",
   fees: 2500.00,
   utilities_included: false,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -74,7 +74,7 @@ RentalProperty.create!(
   property_types: "Studio",
   fees: 900.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -87,7 +87,7 @@ RentalProperty.create!(
   property_types: "Condo",
   fees: 3500.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -100,7 +100,7 @@ RentalProperty.create!(
   property_types: "Cabin",
   fees: 1800.00,
   utilities_included: false,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -113,7 +113,7 @@ RentalProperty.create!(
   property_types: "Loft",
   fees: 2800.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -126,7 +126,7 @@ RentalProperty.create!(
   property_types: "Townhouse",
   fees: 2200.00,
   utilities_included: false,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -139,7 +139,7 @@ RentalProperty.create!(
   property_types: "Penthouse",
   fees: 5000.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -152,7 +152,7 @@ RentalProperty.create!(
   property_types: "Cottage",
   fees: 1500.00,
   utilities_included: false,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -165,7 +165,7 @@ RentalProperty.create!(
   property_types: "Duplex",
   fees: 2400.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -178,7 +178,7 @@ RentalProperty.create!(
   property_types: "Brownstone",
   fees: 3200.00,
   utilities_included: false,
-  user_id: 1
+  user_id: admin_user.id
 )
 
 RentalProperty.create!(
@@ -191,6 +191,29 @@ RentalProperty.create!(
   property_types: "Apartment",
   fees: 800.00,
   utilities_included: true,
-  user_id: 1
+  user_id: admin_user.id
 )
 
+# Create sample feedbacks
+Feedback.create!([
+  {
+    message: "Great communication and timely responses!",
+    author_id: admin_user.id,
+    recipient_id: jane_user.id
+  },
+  {
+    message: "Very respectful and clean tenant.",
+    author_id: jane_user.id,
+    recipient_id: admin_user.id
+  },
+  {
+    message: "Had some delays in payment but communicated well.",
+    author_id: john_user.id,
+    recipient_id: admin_user.id
+  },
+  {
+    message: "Smooth renting experience, highly recommended.",
+    author_id: admin_user.id,
+    recipient_id: john_user.id
+  }
+])
