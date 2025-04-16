@@ -8,7 +8,7 @@ class RentalPropertiesController < ApplicationController
     else
       @rental_properties = RentalProperty.all
   end
-  render json: @rental_properties
+  render json: @rental_properties.as_json(methods: [:latitude, :longitude])
 end
 
   # GET /rental_properties/:id
