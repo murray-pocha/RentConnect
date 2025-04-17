@@ -9,6 +9,7 @@ function AddProperty() {
   const [value, setValue] = React.useState('');
 
   const [formData, setFormData] = useState({
+    property_address: "",
     property_title: "",
     property_description: "",
     property_sqft: "",
@@ -31,12 +32,24 @@ function AddProperty() {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault(); 
+    setFormData({
+      property_address: event.target.address.value,
+      property_title: event.target.property_title.value,
+      property_description: event.target.property_description.value,
+      property_sqft: event.target.property_sqft.value,
+      bedrooms: event.target.bedrooms.value,
+      bathrooms: event.target.bathrooms.value,
+      fees: event.target.fees.value,
+      utilities_included: false,
+    })
     console.log("Form Data Submitted:", formData);
     // Add your API call or form submission logic here
-  };
+    }
+
 
   return (
+
     <div className="add_property_container">
       <h1>Add New Property</h1>
       <form onSubmit={handleSubmit}>
@@ -86,10 +99,11 @@ function AddProperty() {
         <FormControl margin="normal">
           <InputLabel htmlFor="address">Address</InputLabel>
           <AddressAutofill
-            accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+            accessToken={import.meta.env.VITE_REACT_APP_MAPBOX_ACCESS_TOKEN}
             >
-            <Input 
-            autpComplete=" shipping address-line1"
+            <Input
+            type="text" 
+            autoComplete=" shipping address-line1"
             value={value}
             onChange={handleAutoFillChange}
             id="address" 
@@ -102,7 +116,13 @@ function AddProperty() {
 
       <FormControl margin="normal">
           <FormControlLabel
-            control={<Checkbox id="utilities_included" />}
+            control={
+            <Checkbox 
+            id="utilities_included" 
+            checked={formData.utilities_included}
+            onChange={handleChange}
+            />
+          }
             label="Utilities Included"
           />
           <FormHelperText id="utilities_included_helper">Check if utilities are included in the rent.</FormHelperText>
@@ -111,7 +131,7 @@ function AddProperty() {
         <FileUpload />
 
         <button 
-          type="submit" 
+          onSubmit={handleSubmit}
           className="file_label"
         >
           Submit New Property
