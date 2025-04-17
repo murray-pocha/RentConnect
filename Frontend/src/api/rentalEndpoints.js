@@ -32,10 +32,10 @@ export const fetchPropertiesByUser = async (userId) => {
 //   return response.data;
 // };
 
-// const create_rental_property = async (propertyData) => {
-//   const response = await axios.post(rental_property_endpoints.CREATE_RENTAL_PROPERTY, propertyData);
-//   return response.data;
-// };
+export const create_rental_property = async (propertyData) => {
+  const response = await axios.post(rental_property_endpoints.CREATE_RENTAL_PROPERTY, propertyData);
+  return response.data;
+};
 
 // const edit_rental_property = async (id, propertyData) => {
 //   const response = await axios.put(rental_property_endpoints.EDIT_RENTAL_PROPERTY(id), propertyData);

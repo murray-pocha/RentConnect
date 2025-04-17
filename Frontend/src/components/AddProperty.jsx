@@ -2,8 +2,11 @@ import React from "react";
 import { FormControl, Button, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Select } from '@mui/material'
 import FileUpload from "./fileUpload";
 import { useState } from "react";
+import { AddressAutofill } from '@mapbox/search-js-react'
 
 function AddProperty() {
+
+  const [value, setValue] = React.useState('');
 
   const [formData, setFormData] = useState({
     property_title: "",
@@ -22,6 +25,10 @@ function AddProperty() {
       [id]: type === "checkbox" ? checked : value,
     });
   }
+
+  const handleAutoFillChange = (e) => {
+    setValue(e.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -74,6 +81,21 @@ function AddProperty() {
           <InputLabel htmlFor="fees">Monthly Rent (Fees)</InputLabel>
           <Input type="number" id="fees" aria-describedby="fees_helper" />
           <FormHelperText id="fees_helper">Enter the monthly rent for the property.</FormHelperText>
+        </FormControl>
+
+        <FormControl margin="normal">
+          <InputLabel htmlFor="address">Address</InputLabel>
+          <AddressAutofill
+            accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+            >
+            <Input 
+            autpComplete=" shipping address-line1"
+            value={value}
+            onChange={handleAutoFillChange}
+            id="address" 
+            aria-describedby="address_helper" />
+          </AddressAutofill>
+          <FormHelperText id="address_helper">Enter the address of the property.</FormHelperText>
         </FormControl>
 
       </div>
