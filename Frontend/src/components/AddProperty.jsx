@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { FormControl, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Button, Autocomplete } from '@mui/material';
 import FileUpload from "./fileUpload";
-import { create_rental_property } from "../api/rentalEndpoints";
-
+import axios from 'axios';
 function AddProperty() {
   const [formData, setFormData] = useState({
     street: "",
     city: "",
     province: "",
     country: "",
-    property_title: "",
-    property_description: "",
-    property_sqft: "",
+    title: "",
+    description: "",
+    sq_ft: "",
     bedrooms: "",
     bathrooms: "",
     fees: "",
     utilities_included: false,
-    photos: [],
+    images: [],
     property_type:"",
   });
 
@@ -30,23 +29,32 @@ function AddProperty() {
   };
 
   const handleFileChange = (files) => {
-    console.log("formData", formData)
     setFormData({
       ...formData,
-      photos: files,
+      images: files,
     });
   };
 
-  const handleSubmit = (event) => {
-    console.log("formData", formData)
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if(Object.values(formData).some((value) => value === "")) {
       alert("Please fill all required fields.")
     } else {
-    console.log("Form Data Submitted:", formData);
-    create_rental_property(formData).then((response) => console.log(response));
+      const formDataToSend = new FormData()
+      for (const key in formData) {
+        if (key === "images") {
+          formData.images.forEach((file) => {
+            formDataToSend.append("images", file);
+          });
+        } else {
+          formDataToSend.append(key, formData[key]);
+        }
+        console.log(formDataToSend)
+      }
+      axios.post("http://localhost:3000/rental_properties", formDataToSend)
+        .then((response) => console.log(response))}
     }
-  };
+      
 
   return (
     <div className="add_property_container">
@@ -61,10 +69,10 @@ function AddProperty() {
         >
           {/* Property Title */}
           <FormControl margin="normal" required>
-            <InputLabel htmlFor="property_title">Property Title</InputLabel>
+            <InputLabel htmlFor="title">Property Title</InputLabel>
             <Input
-              id="property_title"
-              value={formData.property_title}
+              id="title"
+              value={formData.title}
               onChange={handleChange}
               aria-describedby="property_title_helper"
             />
@@ -75,12 +83,12 @@ function AddProperty() {
           <FormControl margin="normal" required>
             <InputLabel htmlFor="property_description">Property Description</InputLabel>
             <Input
-              id="property_description"
-              value={formData.property_description}
+              id="description"
+              value={formData.description}
               onChange={handleChange}
               aria-describedby="property_description_helper"
             />
-            <FormHelperText id="property_description_helper">Provide a brief description of the property.</FormHelperText>
+            <FormHelperText id="description_helper">Provide a brief description of the property.</FormHelperText>
           </FormControl>
 
           {/* Property Type */}
@@ -112,8 +120,8 @@ function AddProperty() {
             <InputLabel htmlFor="property_sqft">Square Footage</InputLabel>
             <Input
               type="number"
-              id="property_sqft"
-              value={formData.property_sqft}
+              id="sq_ft"
+              value={formData.sq_ft}
               onChange={handleChange}
               aria-describedby="property_sqft_helper"
             />

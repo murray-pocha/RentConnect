@@ -2,7 +2,7 @@ import React from "react"
 import "../styles/FileUpload.css";
 import { useState } from "react";
 
-function FileUpload( {onFileChange} ) {
+function FileUpload( {onFileChange } ) {
 
   const [files, setFiles] = useState([]); 
   const handleFileChange = (event) => {
