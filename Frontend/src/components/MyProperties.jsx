@@ -19,7 +19,6 @@ function MyProperties({ isTenant }) {
       const getProperties = async () => {
         try {
           const properties = await fetchPropertiesByUser(14); // Replace with actual user ID
-          console.log(properties);
           setListings(properties);
         } catch (error) {
           console.error("Failed to fetch rental properties:", error);

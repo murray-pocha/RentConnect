@@ -13,7 +13,7 @@ import AddProperty from "./AddProperty";
 function TenantDashboard({ isTenant }) {
 
     const location = useLocation();
-    console.log("Current route:", location.pathname);
+    
 
   return (
     <>
