@@ -2,12 +2,13 @@ import React from "react"
 import "../styles/FileUpload.css";
 import { useState } from "react";
 
-function FileUpload() {
+function FileUpload( {onFileChange} ) {
 
   const [files, setFiles] = useState([]); 
   const handleFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
     setFiles(selectedFiles);
+    onFileChange(selectedFiles)
   };
 
   return (

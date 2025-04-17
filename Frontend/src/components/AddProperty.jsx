@@ -1,15 +1,14 @@
-import React from "react";
-import { FormControl, Button, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Select } from '@mui/material'
+import React, { useState } from "react";
+import { FormControl, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Button, Autocomplete } from '@mui/material';
 import FileUpload from "./fileUpload";
-import { useState } from "react";
-import { AddressAutofill } from '@mapbox/search-js-react'
+import { create_rental_property } from "../api/rentalEndpoints";
 
 function AddProperty() {
-
-  const [value, setValue] = React.useState('');
-
   const [formData, setFormData] = useState({
-    property_address: "",
+    street: "",
+    city: "",
+    province: "",
+    country: "",
     property_title: "",
     property_description: "",
     property_sqft: "",
@@ -17,128 +16,233 @@ function AddProperty() {
     bathrooms: "",
     fees: "",
     utilities_included: false,
+    photos: [],
+    property_type:"",
   });
 
   const handleChange = (event) => {
+    console.log("formData", formData)
     const { id, value, type, checked } = event.target;
     setFormData({
       ...formData,
       [id]: type === "checkbox" ? checked : value,
     });
-  }
+  };
 
-  const handleAutoFillChange = (e) => {
-    setValue(e.target.value);
+  const handleFileChange = (files) => {
+    console.log("formData", formData)
+    setFormData({
+      ...formData,
+      photos: files,
+    });
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); 
-    setFormData({
-      property_address: event.target.address.value,
-      property_title: event.target.property_title.value,
-      property_description: event.target.property_description.value,
-      property_sqft: event.target.property_sqft.value,
-      bedrooms: event.target.bedrooms.value,
-      bathrooms: event.target.bathrooms.value,
-      fees: event.target.fees.value,
-      utilities_included: false,
-    })
+    console.log("formData", formData)
+    event.preventDefault();
+    if(Object.values(formData).some((value) => value === "")) {
+      alert("Please fill all required fields.")
+    } else {
     console.log("Form Data Submitted:", formData);
-    // Add your API call or form submission logic here
+    create_rental_property(formData).then((response) => console.log(response));
     }
-
+  };
 
   return (
-
     <div className="add_property_container">
       <h1>Add New Property</h1>
       <form onSubmit={handleSubmit}>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "1rem",
-        }}
-      >
-        <FormControl margin="normal">
-          <InputLabel htmlFor="property_title">Property Title</InputLabel>
-          <Input id="property_title" aria-describedby="property_title_helper" />
-          <FormHelperText id="property_title_helper">Enter the title of the property.</FormHelperText>
-        </FormControl>
-
-        <FormControl margin="normal">
-          <InputLabel htmlFor="property_description">Property Description</InputLabel>
-          <Input id="property_description" aria-describedby="property_description_helper" />
-          <FormHelperText id="property_description_helper">Provide a brief description of the property.</FormHelperText>
-        </FormControl>
-
-        <FormControl margin="normal">
-          <InputLabel htmlFor="property_sqft">Square Footage</InputLabel>
-          <Input type="number" id="property_sqft" aria-describedby="property_sqft_helper" />
-          <FormHelperText id="property_sqft_helper">Enter the total square footage of the property.</FormHelperText>
-        </FormControl>
-
-        <FormControl margin="normal">
-          <InputLabel htmlFor="bedrooms">Number of Bedrooms</InputLabel>
-          <Input type="number" id="bedrooms" aria-describedby="bedrooms_helper" />
-          <FormHelperText id="bedrooms_helper">Enter the number of bedrooms.</FormHelperText>
-        </FormControl>
-
-        <FormControl margin="normal">
-          <InputLabel htmlFor="bathrooms">Number of Bathrooms</InputLabel>
-          <Input type="number" id="bathrooms" aria-describedby="bathrooms_helper" />
-          <FormHelperText id="bathrooms_helper">Enter the number of bathrooms.</FormHelperText>
-        </FormControl>
-
-        <FormControl margin="normal">
-          <InputLabel htmlFor="fees">Monthly Rent (Fees)</InputLabel>
-          <Input type="number" id="fees" aria-describedby="fees_helper" />
-          <FormHelperText id="fees_helper">Enter the monthly rent for the property.</FormHelperText>
-        </FormControl>
-
-        <FormControl margin="normal">
-          <InputLabel htmlFor="address">Address</InputLabel>
-          <AddressAutofill
-            accessToken={import.meta.env.VITE_REACT_APP_MAPBOX_ACCESS_TOKEN}
-            >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "1rem",
+          }}
+        >
+          {/* Property Title */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="property_title">Property Title</InputLabel>
             <Input
-            type="text" 
-            autoComplete=" shipping address-line1"
-            value={value}
-            onChange={handleAutoFillChange}
-            id="address" 
-            aria-describedby="address_helper" />
-          </AddressAutofill>
-          <FormHelperText id="address_helper">Enter the address of the property.</FormHelperText>
-        </FormControl>
+              id="property_title"
+              value={formData.property_title}
+              onChange={handleChange}
+              aria-describedby="property_title_helper"
+            />
+            <FormHelperText id="property_title_helper">Enter the title of the property.</FormHelperText>
+          </FormControl>
 
-      </div>
+          {/* Property Description */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="property_description">Property Description</InputLabel>
+            <Input
+              id="property_description"
+              value={formData.property_description}
+              onChange={handleChange}
+              aria-describedby="property_description_helper"
+            />
+            <FormHelperText id="property_description_helper">Provide a brief description of the property.</FormHelperText>
+          </FormControl>
 
-      <FormControl margin="normal">
+          {/* Property Type */}
+          <FormControl margin="normal">
+            <select
+              id="property_type"
+              value={formData.property_type}
+              onChange={handleChange}
+              style={{
+                padding: "0.5rem",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                width: "100%",
+              }}
+            >
+              <option value="">Select Property Type</option>
+              <option value="apartment">Apartment</option>
+              <option value="house">House</option>
+              <option value="studio">Studio</option>
+              <option value="condo">Condo</option>
+              <option value="townhouse">Townhouse</option>
+              <option value="cottage">Cottage</option>
+            </select>
+            <FormHelperText id="property_type_helper">Select the type of property.</FormHelperText>
+          </FormControl>
+
+          {/* Square Footage */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="property_sqft">Square Footage</InputLabel>
+            <Input
+              type="number"
+              id="property_sqft"
+              value={formData.property_sqft}
+              onChange={handleChange}
+              aria-describedby="property_sqft_helper"
+            />
+            <FormHelperText id="property_sqft_helper">Enter the total square footage of the property.</FormHelperText>
+          </FormControl>
+
+          {/* Bedrooms */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="bedrooms">Number of Bedrooms</InputLabel>
+            <Input
+              type="number"
+              id="bedrooms"
+              value={formData.bedrooms}
+              onChange={handleChange}
+              aria-describedby="bedrooms_helper"
+            />
+            <FormHelperText id="bedrooms_helper">Enter the number of bedrooms.</FormHelperText>
+          </FormControl>
+
+          {/* Bathrooms */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="bathrooms">Number of Bathrooms</InputLabel>
+            <Input
+              type="number"
+              id="bathrooms"
+              value={formData.bathrooms}
+              onChange={handleChange}
+              aria-describedby="bathrooms_helper"
+            />
+            <FormHelperText id="bathrooms_helper">Enter the number of bathrooms.</FormHelperText>
+          </FormControl>
+
+          {/* Monthly Rent (Fees) */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="fees">Monthly Rent (Fees)</InputLabel>
+            <Input
+              type="number"
+              id="fees"
+              value={formData.fees}
+              onChange={handleChange}
+              aria-describedby="fees_helper"
+            />
+            <FormHelperText id="fees_helper">Enter the monthly rent for the property.</FormHelperText>
+          </FormControl>
+
+          {/* Street */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="street">Street</InputLabel>
+            <Input
+              id="street"
+              value={formData.street}
+              onChange={handleChange}
+              aria-describedby="street_helper"
+              autoComplete="shipping street-address"
+            />
+            <FormHelperText id="street_helper">Enter the street address.</FormHelperText>
+          </FormControl>
+
+          {/* City */} 
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="city">City</InputLabel>
+            <Input
+              id="city"
+              value={formData.city}
+              onChange={handleChange}
+              aria-describedby="city_helper"
+              autoComplete="home city"
+            />
+            <FormHelperText id="city_helper">Enter the city.</FormHelperText>
+          </FormControl>
+
+          {/* Province */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="province">Province</InputLabel>
+            <Input
+              id="province"
+              value={formData.province}
+              onChange={handleChange}
+              aria-describedby="province_helper"
+              autoComplete="addresss-level1"
+            />
+            <FormHelperText id="province_helper">Enter the province or state.</FormHelperText>
+          </FormControl>
+
+          {/* Country */}
+          <FormControl margin="normal" required>
+            <InputLabel htmlFor="country">Country</InputLabel>
+            <Input
+              id="country"
+              value={formData.country}
+              onChange={handleChange}
+              aria-describedby="country_helper"
+              autoComplete="country"
+            />
+            <FormHelperText id="country_helper">Enter the country.</FormHelperText>
+          </FormControl>
+
+          {/* Utilities Included */}
+        <FormControl margin="normal" required>
           <FormControlLabel
             control={
-            <Checkbox 
-            id="utilities_included" 
-            checked={formData.utilities_included}
-            onChange={handleChange}
-            />
-          }
+              <Checkbox
+                id="utilities_included"
+                checked={formData.utilities_included}
+                onChange={handleChange}
+              />
+            }
             label="Utilities Included"
           />
           <FormHelperText id="utilities_included_helper">Check if utilities are included in the rent.</FormHelperText>
         </FormControl>
 
-        <FileUpload />
+        </div>
 
-        <button 
-          onSubmit={handleSubmit}
-          className="file_label"
-        >
+        {/* File Upload */}
+        <FormControl>
+          <FileUpload onFileChange={handleFileChange} />
+        </FormControl>
+      </form>
+
+        <Button
+        className="file_label"
+        onClick={handleSubmit}
+        variant="contained" 
+        color="primary">
           Submit New Property
-        </button>
-        </form>
+        </Button>
     </div>
-  )
+  );
 }
 
 export default AddProperty;
