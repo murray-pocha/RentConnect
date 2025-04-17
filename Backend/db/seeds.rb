@@ -9,10 +9,7 @@
 #   end
 
 # Clear existing data
-<<<<<<< HEAD
-=======
 Feedback.destroy_all
->>>>>>> develop
 RentalApplication.destroy_all
 RentalProperty.destroy_all
 User.destroy_all
@@ -201,21 +198,25 @@ RentalProperty.create!(
 Feedback.create!([
   {
     message: "Great communication and timely responses!",
+    rating: 4,
     author_id: admin_user.id,
     recipient_id: jane_user.id
   },
   {
     message: "Very respectful and clean tenant.",
+    rating: 5,
     author_id: jane_user.id,
     recipient_id: admin_user.id
   },
   {
     message: "Had some delays in payment but communicated well.",
+    rating: 3,
     author_id: john_user.id,
     recipient_id: admin_user.id
   },
   {
     message: "Smooth renting experience, highly recommended.",
+    rating: 4,
     author_id: admin_user.id,
     recipient_id: john_user.id
   }
