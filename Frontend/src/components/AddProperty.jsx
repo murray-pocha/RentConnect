@@ -2,7 +2,45 @@ import React, { useState } from "react";
 import { FormControl, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Button, Autocomplete } from '@mui/material';
 import FileUpload from "./fileUpload";
 import axios from 'axios';
+import { S3Client, S3 } from "@aws-sdk/client-s3"
+import { Upload } from "@aws-sdk/lib-storage"
+
+
 function AddProperty() {
+
+  //AWS S3 Client
+
+  const s3Client = new S3Client({
+    region: import.meta.env.VITE_AWS_SES_REGION, 
+    credentials: {
+      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY, 
+      secretAccessKey: import.meta.env.VITE_AWS_SECRET_KEY, // Secret key from environment variables
+    },
+  });
+
+  const uploadToS3 = async (file) => {
+    try {
+      const parallelUploadS3 = new Upload({
+        client: s3Client,
+        params: {
+          Bucket: import.meta.env.VITE_AWS_BUCKET_NAME,
+          Key: `property_images/ + ${file.name}`,
+          Body: file,
+        }
+      })
+    
+
+    parallelUploadS3.on("httpUploadProgress", (progress) => {
+        console.log("File upload progress:", progress)
+      })
+
+      await parallelUploadS3.done()
+
+    } catch (error) {
+      console.error("Error uploading file:", error)
+    }
+  }
+
   const [formData, setFormData] = useState({
     street: "",
     city: "",
@@ -40,21 +78,9 @@ function AddProperty() {
     if(Object.values(formData).some((value) => value === "")) {
       alert("Please fill all required fields.")
     } else {
-      const formDataToSend = new FormData()
-      for (const key in formData) {
-        if (key === "images") {
-          formData.images.forEach((file) => {
-            formDataToSend.append("images", file);
-          });
-        } else {
-          formDataToSend.append(key, formData[key]);
-        }
-        console.log(formDataToSend)
-      }
-      axios.post("http://localhost:3000/rental_properties", formDataToSend)
-        .then((response) => console.log(response))}
-    }
-      
+      uploadToS3(formData.images[0])
+    } 
+  }
 
   return (
     <div className="add_property_container">
