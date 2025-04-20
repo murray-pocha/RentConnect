@@ -17,6 +17,7 @@ export const get_all_rental_properties = async () => {
   const response = await axios.get(rental_property_endpoints.GET_RENTAL_PROPERTIES);
   return response.data;
 };
+
 export const fetchPropertiesByUser = async (userId) => {
   try {
     const response = await axios.get(`${rental_property_endpoints.GET_RENTAL_PROPERTY_BY_ID}?user_id=${userId}`);
