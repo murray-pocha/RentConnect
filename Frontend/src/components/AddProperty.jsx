@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FormControl, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Button, Autocomplete } from '@mui/material';
+import { useNavigate } from "react-router-dom"
+import { FormControl, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Button } from '@mui/material';
 import FileUpload from "./fileUpload";
 import axios from 'axios';
 
@@ -19,6 +20,8 @@ function AddProperty() {
     images: [],
     property_type:"",
   });
+
+  const navigateOnSuccess = useNavigate()
 
   const handleChange = (event) => {
     console.log("formData", formData)
@@ -72,9 +75,8 @@ function AddProperty() {
       }
   
       // Add user_id (replace with the actual user ID)
-      formDataToSend.append("rental_property[user_id]", Number(16)) // Replace 1 with the actual user ID
+      formDataToSend.append("rental_property[user_id]", Number(16)) // 16 Is the landlord user for demo purposes
   
-      // Send the request
       const response = await axios.post("http://localhost:3000/rental_properties", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data", // Let Axios handle this automatically
@@ -82,9 +84,25 @@ function AddProperty() {
       });
   
       // Handle success
-      console.log("Property added successfully:", response.data);
       alert("Property added successfully!");
+      setFormData({
+        street: "",
+        city: "",
+        province: "",
+        country: "",
+        title: "",
+        description: "",
+        sq_ft: "",
+        bedrooms: "",
+        bathrooms: "",
+        fees: "",
+        utilities_included: false,
+        images: [],
+        property_type:"",
+      })
+      navigateOnSuccess('/dashboard/my-properties')
     } catch (error) {
+
       // Handle errors
       console.error("Error submitting property:", error.response || error);
       alert("Error submitting property. Please try again.");

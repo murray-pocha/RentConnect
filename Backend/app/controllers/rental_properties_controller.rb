@@ -61,7 +61,8 @@ end
       :property_types,
       :fees,
       :utilities_included,
-      :user_id
+      :user_id,
+      images:[]
     )
   end
 end
