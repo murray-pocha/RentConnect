@@ -24,6 +24,6 @@ dist-ssr
 *.sw?
 Backend/config/database.yml
 
-Frontend/.env:6
-Frontend/.env:7
+Frontend/.env
+
 
