@@ -6,6 +6,7 @@ import LoginPage from "./components/LoginPage";
 import TenantDashboard from "./components/TenantDashboard";
 import ViewApplications from "./components/ViewApplications";
 import RentalProperties from "./components/RentalProperties";
+import AddProperty from './components/AddProperty';
 
 function App() {
   const loggedIn = true;
@@ -24,6 +25,7 @@ function App() {
       {/* Standalone route for testing if needed */}
       <Route path="/applications" element={<ViewApplications />} />
       <Route path="/view-properties" element={<RentalProperties />} />
+      <Route path="/add-property" element={<AddProperty />} />
     </Routes>
   );
 }
