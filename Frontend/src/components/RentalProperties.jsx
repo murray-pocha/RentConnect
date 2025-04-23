@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+
 import PropertyCard from "./PropertyCard";
 import LeafletMapContainer from './ViewPropertiesDashboard/LeafletMapContainer'
+import UserLocation from "./UserLocation";
+
+import { haversineDistanceKM } from "../helpers/convertLatLong.js";
 import { get_all_rental_properties } from "../api/rentalEndpoints.js";
+import { useNavigate } from "react-router-dom";
 
 const RentalProperties = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,6 +45,30 @@ const RentalProperties = () => {
         selectedPropertyType.toLowerCase().trim())
     );
   });
+
+  const [geoLocation, setLocation] = useState(null);
+  const [error, setError] = useState(null);
+  const [distance, setDistance] = useState(100)
+
+  const navigateToProperty = useNavigate()
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          setError(error.message);
+        }
+      );
+    } else {
+      setError('Geolocation is not supported by this browser.');
+    }
+  }, []);
 
   return (
     <div>
@@ -131,25 +160,40 @@ const RentalProperties = () => {
           </button>
         </div>
 
+        <UserLocation distance={ distance } setDistance={setDistance}/>
+        <LeafletMapContainer listings={listings} />
+
         <div style={{ display: "grid", gap: "1.5rem" }}>
-          {filteredListings.length > 0 ? (
-            filteredListings.map((listing) => {
-              const handleClick = () => console.log(listing);
+        {filteredListings.length > 0 ? (
+          filteredListings.map((listing) => {
+            if (
+              //checks user location and calculates distance with listings compared to slider
+              haversineDistanceKM(
+                geoLocation.latitude,
+                geoLocation.longitude,
+                listing.latitude,
+                listing.longitude
+              ) <= distance
+            ) {
+              const handleClick = () => navigateToProperty('/property/' + listing.id);
               const handleApplyClick = () => handleApply(listing.id);
 
               return (
-                <PropertyCard
-                  key={listing.id}
-                  listing={listing}
-                  onClick={handleClick}
-                  onApply={handleApplyClick}
-                />
+                <div key={listing.id}>
+                  <PropertyCard
+                    listing={listing}
+                    onClick={handleClick}
+                    onApply={handleApplyClick}
+                  />
+                </div>
               );
-            })
-          ) : (
-            <p>No properties match your filters.</p>
-          )}
-        </div>
+            }
+            return null; // Return null if the condition is not met
+          })
+        ) : (
+          <p>No properties match your filters.</p>
+        )}
+      </div>
 
         {/* ✅ MAP WRAPPED TO MATCH PAGE LAYOUT */}
         <div
@@ -159,7 +203,6 @@ const RentalProperties = () => {
             overflow: "hidden",
           }}
         >
-          <LeafletMapContainer listings={listings} />
         </div>
       </div>
     </div>

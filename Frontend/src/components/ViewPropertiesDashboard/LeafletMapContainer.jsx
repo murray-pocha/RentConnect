@@ -4,11 +4,11 @@ import "leaflet/dist/leaflet.css";
 
 import { LocationPin } from '../../JS/LocationPin';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
 
 
 function LeafletMapContainer({listings}) {
-    console.log("listings", listings);
-
+    
     const navigateToProperty = useNavigate()
 
     return (
