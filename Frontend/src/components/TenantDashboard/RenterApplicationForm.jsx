@@ -37,9 +37,9 @@ function RenterApplicationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-
+  
     const formData = new FormData();
-
+  
     // Append all text fields
     formData.append("rental_application[first_name]", firstName);
     formData.append("rental_application[last_name]", lastName);
@@ -52,31 +52,39 @@ function RenterApplicationForm() {
     formData.append("rental_application[employer_name]", employerName);
     formData.append("rental_application[years_working_at_employer]", yearsWorking);
     formData.append("rental_application[payment_type]", paymentType);
-
+  
     // Hardcoded user + property for now (can make dynamic later)
     formData.append("rental_application[user_id]", 1);
     formData.append("rental_application[rental_property_id]", 1);
-
+  
     // Append each document
     documents.forEach((doc) => {
       formData.append("documents[]", doc);
     });
-
+  
     try {
       const response = await fetch("http://localhost:3001/rental_applications", {
         method: "POST",
         body: formData,
       });
-
-      const result = await response.json();
-
+  
+      console.log("Raw response status:", response.status);
+      console.log("Raw response ok:", response.ok);
+  
+      let result = null;
+      try {
+        result = await response.json();
+        console.log("Parsed result:", result);
+      } catch (jsonErr) {
+        console.warn("No JSON returned or failed to parse JSON:", jsonErr);
+      }
+  
       if (response.ok) {
         alert("Application submitted successfully!");
-        console.log("Server response:", result);
       } else {
-        console.error("Error response:", result);
-        alert(`Error: ${result.errors ? result.errors.join(", ") : "Something went wrong"}`);
+        alert(`Error: ${result?.errors?.join(", ") || "Something went wrong"}`);
       }
+  
     } catch (err) {
       console.error("Submission error:", err);
       alert("Failed to submit application. Please try again.");
