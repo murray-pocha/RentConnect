@@ -10,7 +10,7 @@ import AddProperty from './components/AddProperty';
 
 function App() {
   const loggedIn = true;
-  const isTenant = false;
+  const isTenant = true;
 
   return (
     <Routes>

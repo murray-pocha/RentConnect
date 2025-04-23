@@ -29,6 +29,7 @@ function TenantDashboard({ isTenant }) {
               <Route path="view-properties" element={<RentalProperties />} />
               <Route path="view-applications" element={<ViewApplications />} />
               <Route path="account-settings" element={<div>Account Settings</div>} />
+              <Route path="property/:id" element={<PropertyPage />} />
             </>
           ) : (
             <>
