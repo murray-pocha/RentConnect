@@ -8,12 +8,12 @@ class RentalPropertiesController < ApplicationController
     else
       @rental_properties = RentalProperty.all
   end
-  render json: @rental_properties.as_json(methods: [:latitude, :longitude])
+  render json: @rental_properties.as_json(methods: [:latitude, :longitude, :images_urls])
 end
 
   # GET /rental_properties/:id
   def show
-    render json: @rental_property.as_json(methods: [:latitude, :longitude])
+    render json: @rental_property.as_json(methods: [:latitude, :longitude, :images_urls])
   end
 
   # POST /rental_properties
@@ -21,7 +21,7 @@ end
     @rental_property = RentalProperty.new(rental_property_params)
 
     if @rental_property.save
-      render json: @rental_property.as_json(methods: [:latitude, :longitude]), status: :created
+      render json: @rental_property.as_json(methods: [:latitude, :longitude, :images_urls]), status: :created
     else
       render json: @rental_property.errors, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ end
   # PATCH/PUT /rental_properties/:id
   def update
     if @rental_property.update(rental_property_params)
-      render json: @rental_property.as_json(methods: [:latitude, :longitude])
+      render json: @rental_property.as_json(methods: [:latitude, :longitude, :images_urls])
     else
       render json: @rental_property.errors.full_messages, status: :unprocessable_entity
     end
@@ -62,7 +62,7 @@ end
       :fees,
       :utilities_included,
       :user_id,
-      images:[]
+      images: []
     )
   end
 end

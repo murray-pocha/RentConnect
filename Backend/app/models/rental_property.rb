@@ -18,4 +18,7 @@ class RentalProperty < ApplicationRecord
       will_save_change_to_street? || will_save_change_to_city? ||
       will_save_change_to_province? || will_save_change_to_country?
     end
+    def images_urls
+      images.map(&:url)
+    end
 end
