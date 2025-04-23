@@ -70,6 +70,21 @@ const RentalProperties = () => {
     }
   }, []);
 
+  const filteredMapListings = geoLocation
+  ? listings.filter((listing) => {
+      return (
+        listing.latitude &&
+        listing.longitude &&
+        haversineDistanceKM(
+          geoLocation.latitude,
+          geoLocation.longitude,
+          listing.latitude,
+          listing.longitude
+        ) <= distance
+      );
+    })
+  : [];
+
   return (
     <div>
       <div
@@ -161,13 +176,13 @@ const RentalProperties = () => {
         </div>
 
         <UserLocation distance={ distance } setDistance={setDistance}/>
-        <LeafletMapContainer listings={listings} />
+        <LeafletMapContainer listings={filteredMapListings} />
 
         <div style={{ display: "grid", gap: "1.5rem" }}>
         {filteredListings.length > 0 ? (
           filteredListings.map((listing) => {
             if (
-              //checks user location and calculates distance with listings compared to slider
+              //checks user location and calculates distance with listings compared to
               haversineDistanceKM(
                 geoLocation.latitude,
                 geoLocation.longitude,
