@@ -70,12 +70,9 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
 
-<<<<<<< HEAD
-=======
   # Remove the previously added Disk service URL options
   config.after_initialize do
     ActiveStorage::Current.url_options = nil
   end
 
->>>>>>> 41d48eaf235929e3a115758fd2e42bebea14e18a
 end
