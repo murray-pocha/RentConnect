@@ -25,7 +25,7 @@ function App() {
       {/* Nested dashboard route */}
       <Route path="/dashboard/*" element={<TenantDashboard User={User} setLoggedIn={setLoggedIn} />} />
 
-      {/* Standalone route for testing if needed */}
+      {/* Standalone routes */}
       <Route path="/applications" element={<ViewApplications />} />
       <Route path="/view-properties" element={<RentalProperties />} />
       <Route path="/add-property" element={<AddProperty />} />

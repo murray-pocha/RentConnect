@@ -23,7 +23,11 @@ function TenantDashboard({ User, setLoggedIn }) {
         <Routes>
           {/* Tenant dashboard routes */}
           <Route path="property/:id" element={<PropertyPage />}/>
+<<<<<<< HEAD
           {User.role === "tenant" ? (
+=======
+          {isTenant ? (
+>>>>>>> develop
             <>
               <Route index element={<TenantProfilePage rating={4.4} />} />
               <Route path="view-properties" element={<RentalProperties />} />
