@@ -2,14 +2,13 @@ import React from "react";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
-function LogoutButton() {
+function LogoutButton({ setLoggedIn }) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:3000/users/sign_out", {
         method: "DELETE",
-        credentials: "include", // Include cookies for session-based authentication
       });
 
       if (!response.ok) {
@@ -20,6 +19,7 @@ function LogoutButton() {
 
       // Redirect to the login page
       navigate("/");
+      setLoggedIn(false)
     } catch (error) {
       console.error("Error logging out:", error);
     }
