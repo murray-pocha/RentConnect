@@ -35,8 +35,9 @@ function Login({ setLoggedIn, setUser }) {
       }
   
       const data = await response.json();
-      setUser(data.user.id)
-      console.log(data.user.id)
+      setUser(data.user)
+      setLoggedIn(true)
+      console.log(data.user)
       console.log("User logged in successfully:", data);
   
       // Redirect or update state after successful login

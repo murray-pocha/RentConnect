@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Header.css"
 import LogoutButton from "./Button Components/LogoutButton";
 
-function Header() {
+function Header({ User, SetLoggedIn }) {
 
 return (
   <header className="header">

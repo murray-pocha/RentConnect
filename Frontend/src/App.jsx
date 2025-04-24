@@ -19,11 +19,11 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={loggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedInn={setLoggedIn} setUser={setUser}/>}
+        element={loggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setLoggedIn} setUser={setUser}/>}
       />
 
       {/* Nested dashboard route */}
-      <Route path="/dashboard/*" element={<TenantDashboard isTenant={isTenant} />} />
+      <Route path="/dashboard/*" element={<TenantDashboard User={User} setLoggedIn={setLoggedIn} />} />
 
       {/* Standalone route for testing if needed */}
       <Route path="/applications" element={<ViewApplications />} />
