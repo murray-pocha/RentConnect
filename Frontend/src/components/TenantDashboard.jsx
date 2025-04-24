@@ -9,16 +9,12 @@ import MyProperties from "./MyProperties";
 import ViewApplications from "./ViewApplications";
 import PropertyPage from "./PropertyPage";
 import AddProperty from "./AddProperty";
-
 function TenantDashboard({ User, setLoggedIn }) {
-
     const location = useLocation();
     
-
   return (
     <>
       <Header User={User} setLoggedIn={setLoggedIn}/>
-
       <div className="tenant_dashboard_container">
         <Routes>
           {/* Tenant dashboard routes */}
@@ -43,10 +39,8 @@ function TenantDashboard({ User, setLoggedIn }) {
           )}
         </Routes>
       </div>
-
       <Sidenav User={User} />
     </>
   );
 }
-
 export default TenantDashboard;

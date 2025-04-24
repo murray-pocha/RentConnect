@@ -10,10 +10,15 @@ import AddProperty from './components/AddProperty';
 import RenterApplicationForm from "./components/TenantDashboard/RenterApplicationForm";
 import SignUp from "./components/SignUp";
 
+// TEMP: Bypassing login/signup — toggle `role` to "tenant" or "landlord" for development
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [User, setUser] = useState({})
-  const isTenant = true;
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [User, setUser] = useState({
+    first_name: "Murray",
+    last_name: "Pocha",
+    email: "murray@example.com",
+    role: "tenant"
+  });
 
   return (
     <Routes>
