@@ -8,7 +8,7 @@ function Header({ User, setLoggedIn }) {
       <div className="header_logo">
         <h1 className="header_title_Primary">Rent</h1>
         <h1 className="header_title_Secondary">Connect</h1>
-        {User && ( // Properly enclosed User check
+        {User && (
           <>
             <h2>
               {User.first_name} {User.last_name}
