@@ -6,6 +6,7 @@ import LoginPage from "./components/LoginPage";
 import TenantDashboard from "./components/TenantDashboard";
 import ViewApplications from "./components/ViewApplications";
 import RentalProperties from "./components/RentalProperties";
+import RenterApplicationForm from "./components/TenantDashboard/RenterApplicationForm";
 import AddProperty from './components/AddProperty';
 
 function App() {
@@ -22,9 +23,10 @@ function App() {
       {/* Nested dashboard route */}
       <Route path="/dashboard/*" element={<TenantDashboard isTenant={isTenant} />} />
 
-      {/* Standalone route for testing if needed */}
+      {/* Standalone routes */}
       <Route path="/applications" element={<ViewApplications />} />
       <Route path="/view-properties" element={<RentalProperties />} />
+      <Route path="/renter-application" element={<RenterApplicationForm />} />
       <Route path="/add-property" element={<AddProperty />} />
     </Routes>
   );
