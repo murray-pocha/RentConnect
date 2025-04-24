@@ -9,7 +9,7 @@ import RentalProperties from "./components/RentalProperties";
 
 function App() {
   const loggedIn = true;
-  const isTenant = false;
+  const isTenant = true;
 
   return (
     <Routes>

@@ -14,6 +14,7 @@ const RentalProperties = () => {
   const getProperties = async () => {
     try {
       const properties = await get_all_rental_properties();
+      console.log("All property types returned:", properties.map(p => p.property_types));
       console.log(properties);
       setListings(properties);
     } catch (error) {
@@ -34,7 +35,7 @@ const RentalProperties = () => {
       (!minPrice || listing.fees >= parseInt(minPrice)) &&
       (!maxPrice || listing.fees <= parseInt(maxPrice)) &&
       (!minBedrooms || listing.bedrooms >= parseInt(minBedrooms)) &&
-      (!selectedPropertyType || listing.property_types === selectedPropertyType)
+      (!selectedPropertyType || listing.property_types?.toLowerCase().trim() === selectedPropertyType.toLowerCase().trim())
     );
   });
 

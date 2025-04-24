@@ -7,7 +7,10 @@ class RentalPropertiesController < ApplicationController
       @rental_properties = RentalProperty.where(user_id: params[:user_id])
     else
       @rental_properties = RentalProperty.all
+<<<<<<< HEAD
     render json: @rental_properties.as_json(methods: [:latitude, :longitude])
+=======
+>>>>>>> 7c2abd8 (Frontend: Implemented property type image filtering and styling updates; Backend: Refreshed seed data with full property type coverage)
   end
   render json: @rental_properties
 end
