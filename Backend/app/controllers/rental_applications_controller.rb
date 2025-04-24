@@ -3,7 +3,12 @@ class RentalApplicationsController < ApplicationController
 
   # GET /rental_applications
   def index
-    @rental_applications = RentalApplication.all
+    if params[:user_id]
+      @rental_applications = RentalApplication.where(user_id: params[:user_id])
+    else
+      @rental_applications = RentalApplication.all
+    end
+  
     render json: @rental_applications.map { |app|
       app.as_json.merge(
         documents: app.documents.map { |doc| url_for(doc) }

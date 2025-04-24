@@ -39,6 +39,7 @@ function Login({ setLoggedIn, setUser }) {
       setLoggedIn(true)
       console.log(data.user)
       console.log("User logged in successfully:", data);
+    
   
       // Redirect or update state after successful login
       // window.location.href = "/dashboard";

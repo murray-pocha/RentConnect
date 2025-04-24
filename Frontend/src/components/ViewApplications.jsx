@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 
-// TEMP mock data — will replace with real API later
-const mockApplications = [
-  {
-    id: 1,
-    title: "Cozy Apartment in Downtown",
-    status: "Pending",
-    submittedAt: "2025-04-15",
-  },
-  {
-    id: 2,
-    title: "Spacious House in Suburbs",
-    status: "Approved",
-    submittedAt: "2025-04-10",
-  },
-];
+
 
 const ViewApplications = () => {
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
-    // Simulate fetch
-    setApplications(mockApplications);
+    const userId = localStorage.getItem("user_id");
+    if (!userId) {
+      console.error("No user_id found in localStorage");
+      return;
+    }
+  
+    fetch(`http://localhost:3000/rental_applications?user_id=${userId}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch applications");
+        return res.json();
+      })
+      .then((data) => {
+        setApplications(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching applications:", err);
+      });
   }, []);
 
   return (
@@ -45,7 +46,7 @@ const ViewApplications = () => {
             >
               <h3>{app.title}</h3>
               <p>Status: <strong>{app.status}</strong></p>
-              <p>Submitted: {app.submittedAt}</p>
+              <p>Submitted: {app.created_at?.slice(0,10)}</p>
             </li>
           ))}
         </ul>
