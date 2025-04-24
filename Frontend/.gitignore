@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 Backend/config/database.yml
+
+
+.env
+Frontend/.env

@@ -10,20 +10,20 @@ import ViewApplications from "./ViewApplications";
 import PropertyPage from "./PropertyPage";
 import AddProperty from "./AddProperty";
 
-function TenantDashboard({ isTenant }) {
+function TenantDashboard({ User, setLoggedIn }) {
 
     const location = useLocation();
     
 
   return (
     <>
-      <Header />
+      <Header User={User} setLoggedIn={setLoggedIn}/>
 
       <div className="tenant_dashboard_container">
         <Routes>
           {/* Tenant dashboard routes */}
           <Route path="property/:id" element={<PropertyPage />}/>
-          {isTenant ? (
+          {User.role === "tenant" ? (
             <>
               <Route index element={<TenantProfilePage rating={4.4} />} />
               <Route path="view-properties" element={<RentalProperties />} />
@@ -34,7 +34,7 @@ function TenantDashboard({ isTenant }) {
           ) : (
             <>
               <Route index element={<TenantProfilePage rating={4.4} />} />
-              <Route path="my-properties" element={<MyProperties isTenant={isTenant}/>} />
+              <Route path="my-properties" element={<MyProperties />} />
               <Route path="property/:id" element={<PropertyPage />} />
               <Route path="add-property" element={<AddProperty />}/>
               <Route path="account-settings" element={<div>Account Settings</div>} />
@@ -44,7 +44,7 @@ function TenantDashboard({ isTenant }) {
         </Routes>
       </div>
 
-      <Sidenav isTenant={isTenant} />
+      <Sidenav User={User} />
     </>
   );
 }
