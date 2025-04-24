@@ -7,6 +7,7 @@ import TenantDashboard from "./components/TenantDashboard";
 import ViewApplications from "./components/ViewApplications";
 import RentalProperties from "./components/RentalProperties";
 import AddProperty from './components/AddProperty';
+import RenterApplicationForm from "./components/TenantDashboard/RenterApplicationForm";
 
 function App() {
   const loggedIn = true;
@@ -26,6 +27,7 @@ function App() {
       <Route path="/applications" element={<ViewApplications />} />
       <Route path="/view-properties" element={<RentalProperties />} />
       <Route path="/add-property" element={<AddProperty />} />
+      <Route path="/renter-application" element={<RenterApplicationForm />} />
     </Routes>
   );
 }

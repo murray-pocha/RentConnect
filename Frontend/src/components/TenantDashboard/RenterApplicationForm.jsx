@@ -1,0 +1,188 @@
+import React, { useState } from "react";
+import "../../styles/RenterApplicationForm.css";
+
+function RenterApplicationForm() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [currentAddress, setCurrentAddress] = useState("");
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [employmentStatus, setEmploymentStatus] = useState("");
+  const [employerName, setEmployerName] = useState("");
+  const [yearsWorking, setYearsWorking] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+  const [documents, setDocuments] = useState([]);
+
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!firstName) newErrors.firstName = "First name is required";
+    if (!lastName) newErrors.lastName = "Last name is required";
+    if (!age || isNaN(age) || age < 18) newErrors.age = "Valid age (18+) required";
+    if (!currentAddress) newErrors.currentAddress = "Address is required";
+    if (!province) newErrors.province = "Province is required";
+    if (!city) newErrors.city = "City is required";
+    if (!country) newErrors.country = "Country is required";
+    if (!employmentStatus) newErrors.employmentStatus = "Employment status is required";
+    if (!yearsWorking || isNaN(yearsWorking) || yearsWorking < 0) newErrors.yearsWorking = "Valid years of employment required";
+    if (!paymentType) newErrors.paymentType = "Payment type is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const formData = new FormData();
+
+    // Append all text fields
+    formData.append("rental_application[first_name]", firstName);
+    formData.append("rental_application[last_name]", lastName);
+    formData.append("rental_application[age]", age);
+    formData.append("rental_application[current_address]", currentAddress);
+    formData.append("rental_application[province]", province);
+    formData.append("rental_application[city]", city);
+    formData.append("rental_application[country]", country);
+    formData.append("rental_application[employment_status]", employmentStatus);
+    formData.append("rental_application[employer_name]", employerName);
+    formData.append("rental_application[years_working_at_employer]", yearsWorking);
+    formData.append("rental_application[payment_type]", paymentType);
+
+    // Hardcoded user + property for now (can make dynamic later)
+    formData.append("rental_application[user_id]", 1);
+    formData.append("rental_application[rental_property_id]", 1);
+
+    // Append each document
+    documents.forEach((doc) => {
+      formData.append("documents[]", doc);
+    });
+
+    try {
+      const response = await fetch("http://localhost:3001/rental_applications", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("Application submitted successfully!");
+        console.log("Server response:", result);
+      } else {
+        console.error("Error response:", result);
+        alert(`Error: ${result.errors ? result.errors.join(", ") : "Something went wrong"}`);
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+      alert("Failed to submit application. Please try again.");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="rental-form">
+      <h2>Rental Application Form</h2>
+
+      <div className="form-grid">
+        <div className="form-group">
+          <label>First Name:</label>
+          <input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          {errors.firstName && <p className="error-text">{errors.firstName}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Last Name:</label>
+          <input value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          {errors.lastName && <p className="error-text">{errors.lastName}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Age:</label>
+          <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+          {errors.age && <p className="error-text">{errors.age}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Current Address:</label>
+          <input value={currentAddress} onChange={(e) => setCurrentAddress(e.target.value)} />
+          {errors.currentAddress && <p className="error-text">{errors.currentAddress}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Province:</label>
+          <input value={province} onChange={(e) => setProvince(e.target.value)} />
+          {errors.province && <p className="error-text">{errors.province}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>City:</label>
+          <input value={city} onChange={(e) => setCity(e.target.value)} />
+          {errors.city && <p className="error-text">{errors.city}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Country:</label>
+          <input value={country} onChange={(e) => setCountry(e.target.value)} />
+          {errors.country && <p className="error-text">{errors.country}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Employment Status:</label>
+          <input value={employmentStatus} onChange={(e) => setEmploymentStatus(e.target.value)} />
+          {errors.employmentStatus && <p className="error-text">{errors.employmentStatus}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Employer Name (optional):</label>
+          <input value={employerName} onChange={(e) => setEmployerName(e.target.value)} />
+        </div>
+
+        <div className="form-group">
+          <label>Years at Employer:</label>
+          <input type="number" value={yearsWorking} onChange={(e) => setYearsWorking(e.target.value)} />
+          {errors.yearsWorking && <p className="error-text">{errors.yearsWorking}</p>}
+        </div>
+
+        <div className="form-group">
+          <label>Payment Type:</label>
+          <select value={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
+            <option value="">Select</option>
+            <option value="credit">Credit</option>
+            <option value="cheque">Cheque</option>
+            <option value="cash">Cash</option>
+          </select>
+          {errors.paymentType && <p className="error-text">{errors.paymentType}</p>}
+        </div>
+      </div>
+
+      <div className="form-group">
+        <p className="file-label">Documents (optional):</p>
+
+        <div className="file-upload-wrapper">
+          <button
+            type="button"
+            className="custom-file-label"
+            onClick={() => document.getElementById('documents').click()}
+          >
+            Choose File(s)
+          </button>
+          <input
+            id="documents"
+            type="file"
+            multiple
+            onChange={(e) => setDocuments(Array.from(e.target.files))}
+            className="file-input-hidden"
+          />
+        </div>
+      </div>
+
+      <button type="submit" className="submit-btn">Submit Application</button>
+    </form>
+  );
+}
+
+export default RenterApplicationForm;
