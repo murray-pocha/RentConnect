@@ -19,7 +19,7 @@ function TenantProfilePage({ User }) {
 
   useEffect(() => {
     getFeedback(User.id)
-  }, [])
+  }, [User.id])
   
   const averageRating = (feedback) => {
     if(!feedback || feedback.length === 0) return 0

@@ -10,6 +10,8 @@ function LandlordReviews({ feedback }) {
   const [review, setReview] = React.useState(0)
   const handleStarClick = (index) => {
     setReview(index + 1)};
+
+    console.log("feedback", feedback)
  
   return (
     <>
@@ -50,14 +52,15 @@ function LandlordReviews({ feedback }) {
           </form>
           </div>
         }
-      {feedback.map((review) => (
-      <UserReview 
-        rating={review.rating}
-        message={review.message}
-        author={review.author}
-        createdAt={review.createdAt}
-      />
-    ))}
+        {feedback.map((review) => ( 
+          <UserReview 
+            key={review.id}
+            rating={review.rating}
+            message={review.message}
+            author_id={review.author_id} // Corrected prop name
+            createdAt={review.created_at}
+          />
+        ))}
   </>
   )
 }
