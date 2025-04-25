@@ -20,9 +20,6 @@ function TenantProfilePage({ User }) {
   useEffect(() => {
     getFeedback(User.id)
   }, [])
-
-  console.log("feedback", feedback)
-
   
   const averageRating = (feedback) => {
     if(!feedback || feedback.length === 0) return 0
@@ -31,19 +28,17 @@ function TenantProfilePage({ User }) {
     return ratingSum / feedback.length
   }
 
-  console.log("average rating", averageRating(feedback))
-
+  const rating = averageRating(feedback)
 
   return(
     <div className="tenant_profile_page">
       <TenantHeader 
         User={User}
-        rating={averageRating}
+        rating={rating}
+        feedbackAmount = {feedback.length}
       />
       <ShareableLink />
-      <Landlordreviews 
-        rating={averageRating}
-      />
+      <Landlordreviews feedback={feedback} />
     </div>
   )
 }

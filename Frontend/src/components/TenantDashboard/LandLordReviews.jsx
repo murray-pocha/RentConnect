@@ -4,7 +4,7 @@ import { TextField } from "@mui/material";
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
-function LandlordReviews({rating}) {
+function LandlordReviews({ feedback }) {
 
   const [reviewButtonActive, setReviewButtonActive] = React.useState(false)
   const [review, setReview] = React.useState(0)
@@ -50,9 +50,14 @@ function LandlordReviews({rating}) {
           </form>
           </div>
         }
+      {feedback.map((review) => (
       <UserReview 
-        rating={rating}
+        rating={review.rating}
+        message={review.message}
+        author={review.author}
+        createdAt={review.createdAt}
       />
+    ))}
   </>
   )
 }

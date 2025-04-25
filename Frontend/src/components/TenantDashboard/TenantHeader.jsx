@@ -4,7 +4,7 @@ import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import StarRating from "../StarRating"
 import "../../styles/TenantHeader.css";
 
-function TenantHeader({ User, rating }) {
+function TenantHeader({ User, rating, feedbackAmount }) {
 
 
   return (
@@ -17,7 +17,8 @@ function TenantHeader({ User, rating }) {
             <StarRating 
             rating={rating}
             />
-            <h3>( Average {rating} from 6 reviews )</h3>          </div>
+            <h3>( Average {rating} from {feedbackAmount} reviews )</h3>          
+            </div>
         </div>
         <div className="header_icons">
             <EditRoundedIcon className="header_icon" sx={{fontSize: 35}} 
