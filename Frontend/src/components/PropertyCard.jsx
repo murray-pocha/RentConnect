@@ -1,7 +1,7 @@
 import React from "react";
 import ApplyButton from "./Button Components/ApplyButton";
 
-function PropertyCard({ listing, onClick, isTenant, userId }) {
+function PropertyCard({ listing, onClick, isTenant }) {
   // Helper function to dynamically build Unsplash image URL
   const getImageURL = (type) => {
     const fallback = "/images/fallback.jpg";
@@ -53,8 +53,7 @@ function PropertyCard({ listing, onClick, isTenant, userId }) {
       {isTenant && (
         <ApplyButton
           propertyId={listing.id}
-          onClick={onClick}
-          userId={userId} />
+          onClick={onClick} />
       )}
     </div>
   );

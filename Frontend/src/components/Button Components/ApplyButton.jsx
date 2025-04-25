@@ -1,37 +1,27 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function ApplyButton({ propertyId, userId }) {
-  const handleApply = async () => {
+function ApplyButton({ propertyId, userId: propUserId }) {
+  const navigate = useNavigate();
+
+  // ✅ Use prop if available, otherwise fallback to localStorage
+  const userId = propUserId || localStorage.getItem("user_id");
+
+  const handleApply = () => {
     console.log("✅ handleApply triggered for property:", propertyId);
+    console.log("🔐 userId being passed:", userId);
 
     if (!userId) {
       alert("No user ID found. Please log in.");
       return;
     }
 
-    try {
-      const response = await fetch("http://localhost:3000/rental_applications", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          rental_property_id: propertyId,
-          user_id: userId,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to apply");
-      }
-
-      const data = await response.json();
-      alert("Application submitted!");
-      console.log("🎉 Response from backend:", data);
-    } catch (error) {
-      alert("Error submitting application: " + error.message);
-      console.error("❌ Apply error:", error);
-    }
+    navigate("/renter-application", {
+      state: {
+        propertyId,
+        userId,
+      },
+    });
   };
 
   return (

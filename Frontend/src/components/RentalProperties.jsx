@@ -3,6 +3,8 @@ import PropertyCard from "./PropertyCard";
 import LeafletMapContainer from './ViewPropertiesDashboard/LeafletMapContainer'
 import { get_all_rental_properties } from "../api/rentalEndpoints.js";
 
+
+
 const RentalProperties = ({ user }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
@@ -146,7 +148,7 @@ const RentalProperties = ({ user }) => {
                   onClick={handleClick}
                   onApply={handleApplyClick}
                   isTenant={true}
-                  userId={user?.id}
+                  userId={userId}
                 />
               );
             })

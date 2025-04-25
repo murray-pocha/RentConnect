@@ -12,25 +12,32 @@ import SignUp from "./components/SignUp";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [User, setUser] = useState({})
+  const [User, setUser] = useState({});
   const isTenant = true;
 
   return (
     <Routes>
       <Route
         path="/"
-        element={loggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setLoggedIn} setUser={setUser}/>}
+        element={
+          loggedIn ? (
+            <Navigate to="/dashboard/view-properties" />
+          ) : (
+            <LoginPage setLoggedIn={setLoggedIn} setUser={setUser} />
+          )
+        }
       />
 
-      {/* Nested dashboard route */}
-      <Route path="/dashboard/*" element={<TenantDashboard User={User} setLoggedIn={setLoggedIn} />} />
+      {/* Dashboard shell + nested sub-routes */}
+      <Route path="/dashboard/*" element={<TenantDashboard User={User} setLoggedIn={setLoggedIn} />}>
+        <Route path="view-applications" element={<ViewApplications />} />
+        <Route path="view-properties" element={<RentalProperties user={User} />} />
+      </Route>
 
       {/* Standalone routes */}
-      <Route path="/applications" element={<ViewApplications />} />
-      <Route path="/view-properties" element={<RentalProperties user={User} />} />
       <Route path="/add-property" element={<AddProperty />} />
       <Route path="/renter-application" element={<RenterApplicationForm />} />
-      <Route path="/sign-up" element={<SignUp />}/>
+      <Route path="/sign-up" element={<SignUp />} />
     </Routes>
   );
 }

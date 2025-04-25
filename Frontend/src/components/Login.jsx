@@ -16,7 +16,7 @@ function Login({ setLoggedIn, setUser }) {
     e.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:3000/users/sign_in", {
+      const response = await fetch("http://localhost:3001/users/sign_in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,6 +37,7 @@ function Login({ setLoggedIn, setUser }) {
       const data = await response.json();
       setUser(data.user)
       setLoggedIn(true)
+      localStorage.setItem("user_id", data.user.id);
       console.log(data.user)
       console.log("User logged in successfully:", data);
     
