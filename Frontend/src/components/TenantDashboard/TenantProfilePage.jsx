@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TenantHeader from "./TenantHeader";
 import ShareableLink from "./ShareableLink";
 import Landlordreviews from "./LandLordReviews"
 import "../../styles/TenantProfilePage.css";
 import { getAllFeedbacks, getFeedbackById } from "../../api/feedBackEndpoints";
 
-function TenantProfilePage({ User, rating }) {
+function TenantProfilePage({ User }) {
 
-  const getFeedback = async (id) => {
-    const feedback = await getAllFeedbacks(id)
+  const [feedback, setFeedback] = useState([])
+
+  const getFeedback = async () => {
+    await getAllFeedbacks()
     .then(data => data
       .filter((feedback) => feedback.recipient_id === User.id))
-    .then((filteredFeedback) => console.log("Feedback", filteredFeedback))
+    .then((filteredFeedback) => setFeedback(filteredFeedback))
     .catch((error) => console.error(error))
   }
 
@@ -19,15 +21,28 @@ function TenantProfilePage({ User, rating }) {
     getFeedback(User.id)
   }, [])
 
+  console.log("feedback", feedback)
+
+  
+  const averageRating = (feedback) => {
+    if(!feedback || feedback.length === 0) return 0
+
+    const ratingSum = feedback.reduce((prev, curr) =>  prev + curr.rating, 0)
+    return ratingSum / feedback.length
+  }
+
+  console.log("average rating", averageRating(feedback))
+
+
   return(
     <div className="tenant_profile_page">
       <TenantHeader 
         User={User}
-        rating={rating}
+        rating={averageRating}
       />
       <ShareableLink />
       <Landlordreviews 
-        rating={rating}
+        rating={averageRating}
       />
     </div>
   )
