@@ -4,14 +4,17 @@ class RentalApplicationsController < ApplicationController
   # GET /rental_applications
   def index
     if params[:user_id]
-      @rental_applications = RentalApplication.where(user_id: params[:user_id])
+      @rental_applications = RentalApplication.includes(:rental_property).where(user_id: params[:user_id]).order(created_at: :desc)
     else
       @rental_applications = RentalApplication.all
     end
   
     render json: @rental_applications.map { |app|
       app.as_json.merge(
-        documents: app.documents.map { |doc| url_for(doc) }
+        documents: app.documents.map { |doc| url_for(doc) },
+        rental_property: {
+          title: app.rental_property&.title
+        }
       )
     }, status: :ok
   end

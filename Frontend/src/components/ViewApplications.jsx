@@ -19,6 +19,7 @@ const ViewApplications = () => {
         return res.json();
       })
       .then((data) => {
+        console.log("Applications response:", data);
         setApplications(data);
       })
       .catch((err) => {
@@ -68,7 +69,7 @@ const ViewApplications = () => {
                 color: "black",
               }}
             >
-              <h3>{app.title}</h3>
+              <h3>{app.rental_property?.title || "Untitled Property"}</h3>
               <p>Status: <strong>{app.status}</strong></p>
               <p>Submitted: {app.created_at?.slice(0, 10)}</p>
             </li>
