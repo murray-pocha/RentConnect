@@ -12,13 +12,15 @@ import SignUp from "./components/SignUp";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [User, setUser] = useState({})
+  const [User, setUser] = useState(localStorage.getItem('user'))
+
+  console.log("User", User)
 
   return (
     <Routes>
       <Route
         path="/"
-        element={loggedIn ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setLoggedIn} setUser={setUser}/>}
+        element={User ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setLoggedIn} setUser={setUser}/>}
       />
 
       {/* Nested dashboard route */}

@@ -37,9 +37,7 @@ function Login({ setLoggedIn, setUser }) {
       const data = await response.json();
       setUser(data.user)
       setLoggedIn(true)
-      localStorage.setItem("user", JSON.stringify(data.user))
-      console.log("Logged in user", JSON.parse(localStorage.getItem("user")))
-  
+      localStorage.setItem("user", JSON.stringify(data.user))  
     } catch (error) {
       console.error("Error logging in:", error);
       setError("Invalid email or password. Please try again.");
