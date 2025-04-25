@@ -189,12 +189,24 @@ function RenterApplicationForm() {
             id="documents"
             type="file"
             multiple
-            onChange={(e) => setDocuments(Array.from(e.target.files))}
+            onChange={(e) =>
+              setDocuments((prevDocs) => [...prevDocs, ...Array.from(e.target.files)])}
             className="file-input-hidden"
           />
         </div>
-      </div>
 
+        {documents.length > 0 && (
+          <div style={{ marginTop: "0.5rem", color: "#fff" }}>
+            <strong>Selected File{documents.length > 1 ? "s" : ""}:</strong>
+            <ul style={{ paddingLeft: "1rem", marginTop: "0.25rem" }}>
+              {documents.map((file, index) => (
+                <li key={index}>{file.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+  
       <button type="submit" className="submit-btn">Submit Application</button>
     </form>
   );
