@@ -29,7 +29,7 @@ function TenantDashboard({ User, setLoggedIn }) {
           <Route path="property/:id" element={<PropertyPage />}/>
           {User.role === "tenant" ? (
             <>
-              <Route index element={<TenantProfilePage rating={4.4} />} />
+              <Route index element={<TenantProfilePage User={User} rating={4.4} />} />
               <Route path="view-properties" element={<RentalProperties />} />
               <Route path="view-applications" element={<ViewApplications />} />
               <Route path="account-settings" element={<div>Account Settings</div>} />
@@ -37,7 +37,7 @@ function TenantDashboard({ User, setLoggedIn }) {
             </>
           ) : (
             <>
-              <Route index element={<TenantProfilePage rating={4.4} />} />
+              <Route index element={<TenantProfilePage User={User} rating={4.4} />} />
               <Route path="my-properties" element={<MyProperties />} />
               <Route path="property/:id" element={<PropertyPage />} />
               <Route path="add-property" element={<AddProperty />}/>
