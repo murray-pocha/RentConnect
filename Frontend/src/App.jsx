@@ -13,7 +13,6 @@ import SignUp from "./components/SignUp";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [User, setUser] = useState({})
-  const isTenant = true;
 
   return (
     <Routes>
