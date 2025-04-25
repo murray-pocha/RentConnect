@@ -18,26 +18,10 @@ const API_BASE_URL = "http://localhost:3001"; // Replace with your backend's bas
 export const getUserById = async (userId) => {
   try {
     const response = await fetch(`${API_BASE_URL}/users/${userId}`);
-    
-    // Log the raw response
-    const responseText = await response.text();
-    console.log('Raw response:', responseText);
-
     if (!response.ok) {
       throw new Error(`Failed to fetch user with ID: ${userId}`);
     }
-
-    // Try to parse the response as JSON
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error('Failed to parse response as JSON:', parseError);
-      throw new Error('Invalid JSON response from server');
-    }
-
-    console.log('Parsed user data:', data);
-    return data;
+    return await response.json(); // Parse the response as JSON
   } catch (error) {
     console.error(`Error fetching user with ID ${userId}:`, error);
     throw error;

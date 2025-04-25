@@ -13,8 +13,6 @@ import SignUp from "./components/SignUp";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [User, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-
-  console.log("user", User)
   
   return (
     <Routes>

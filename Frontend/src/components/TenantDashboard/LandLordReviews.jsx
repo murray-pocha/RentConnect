@@ -10,8 +10,6 @@ function LandlordReviews({ feedback }) {
   const [review, setReview] = React.useState(0)
   const handleStarClick = (index) => {
     setReview(index + 1)};
-
-    console.log("feedback", feedback)
  
   return (
     <>
