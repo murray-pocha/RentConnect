@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import RenterApplicationForm from "./TenantDashboard/RenterApplicationForm";
 import Header from "./Header";
 import Sidenav from "./Sidenav";
@@ -13,6 +13,10 @@ import AddProperty from "./AddProperty";
 function TenantDashboard({ User, setLoggedIn }) {
 
     const location = useLocation();
+
+    if(!User) {
+      return <Navigate to={"/sign-up"} state={{from: '/dashboard'}} replace/>
+    }
     
 
   return (

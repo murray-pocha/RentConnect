@@ -12,15 +12,13 @@ import SignUp from "./components/SignUp";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [User, setUser] = useState(localStorage.getItem('user'))
-
-  console.log("User", User)
-
+  const [User, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  
   return (
     <Routes>
       <Route
         path="/"
-        element={User ? <Navigate to="/dashboard" /> : <LoginPage setLoggedIn={setLoggedIn} setUser={setUser}/>}
+        element={User ? <Navigate to="/dashboard" /> : <Navigate to={"/sign-up"} />}
       />
 
       {/* Nested dashboard route */}
@@ -31,7 +29,7 @@ function App() {
       <Route path="/view-properties" element={<RentalProperties />} />
       <Route path="/add-property" element={<AddProperty />} />
       <Route path="/renter-application" element={<RenterApplicationForm />} />
-      <Route path="/sign-up" element={<SignUp />}/>
+      <Route path="/sign-up" element={<LoginPage setLoggedIn={setLoggedIn} setUser={setUser} />}/>
     </Routes>
   );
 }
