@@ -4,7 +4,6 @@ import LogoutButton from "./Button Components/LogoutButton";
 
 function Header({ User, setLoggedIn }) {
 
-  console.log("Header user", User)
   return (
     <header className="header">
       <div className="header_logo">
