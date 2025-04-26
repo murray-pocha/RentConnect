@@ -1,15 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function ApplyButton({ propertyId, userId: propUserId }) {
+function ApplyButton({ propertyId, User }) {
   const navigate = useNavigate();
 
   // ✅ Use prop if available, otherwise fallback to localStorage
-  const userId = propUserId || localStorage.getItem("user_id");
+  const userId = User.id || localStorage.getItem("user").id;
 
   const handleApply = () => {
     console.log("✅ handleApply triggered for property:", propertyId);
-    console.log("🔐 userId being passed:", userId);
+    console.log("🔐 userId being passed:", User.id);
 
     if (!userId) {
       alert("No user ID found. Please log in.");

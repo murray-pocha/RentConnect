@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const ViewApplications = () => {
+const ViewApplications = ({ User }) => {
   const location = useLocation();
   const [applications, setApplications] = useState([]);
   const [showSuccess, setShowSuccess] = useState(location.state?.submitted || false);
 
   useEffect(() => {
-    const userId = localStorage.getItem("user_id");
+    const userId = User.id;
     if (!userId) {
       console.error("No user_id found in localStorage");
       return;

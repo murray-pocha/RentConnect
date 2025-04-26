@@ -34,8 +34,8 @@ function App() {
         element={<TenantDashboard User={User} setLoggedIn={setLoggedIn} />}
       >
         {/* Nested routes inside dashboard layout */}
-        <Route path="view-properties" element={<RentalProperties user={User} />} />
-        <Route path="view-applications" element={<ViewApplications />} />
+        <Route path="view-properties" element={<RentalProperties User={User} />} />
+        <Route path="view-applications" element={<ViewApplications User={User}/>} />
         <Route path="renter-application" element={<RenterApplicationForm />} />
         <Route path="add-property" element={<AddProperty />} />
         <Route path="account-settings" element={<div>Account Settings</div>} />
@@ -43,7 +43,8 @@ function App() {
       </Route>
 
       {/* Sign Up route (outside dashboard layout) */}
-      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/sign-up" element={<SignUp setUser={setUser}/>} />
+      <Route path="login" element={<LoginPage setUser={setUser}/> } />
     </Routes>
   );
 }
