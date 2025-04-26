@@ -5,7 +5,8 @@ import { get_all_rental_properties } from "../api/rentalEndpoints.js";
 
 
 
-const RentalProperties = ({ user }) => {
+const RentalProperties = ({ User }) => {
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -13,7 +14,6 @@ const RentalProperties = ({ user }) => {
   const [selectedPropertyType, setSelectedPropertyType] = useState("");
   const [listings, setListings] = useState([]);
   
-  const userId = user?.id;
 
   const getProperties = async () => {
     try {
@@ -148,7 +148,7 @@ const RentalProperties = ({ user }) => {
                   onClick={handleClick}
                   onApply={handleApplyClick}
                   isTenant={true}
-                  userId={userId}
+                  User={User}
                 />
               );
             })
