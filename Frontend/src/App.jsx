@@ -18,7 +18,7 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={User ? <Navigate to="/dashboard" /> : <Navigate to={"/sign-up"} />}
+        element={User ? <Navigate to="/dashboard" /> : <Navigate to={"/login"} />}
       />
 
       {/* Nested dashboard route */}
@@ -29,7 +29,8 @@ function App() {
       <Route path="/view-properties" element={<RentalProperties />} />
       <Route path="/add-property" element={<AddProperty />} />
       <Route path="/renter-application" element={<RenterApplicationForm />} />
-      <Route path="/sign-up" element={<LoginPage setLoggedIn={setLoggedIn} setUser={setUser} />}/>
+      <Route path="/login" element={<LoginPage setLoggedIn={setLoggedIn} setUser={setUser} />}/>
+      <Route path="/sign-up" element={<SignUp User={User} setUser={setUser}/>} />
     </Routes>
   );
 }

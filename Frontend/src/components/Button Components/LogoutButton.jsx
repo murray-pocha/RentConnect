@@ -18,7 +18,7 @@ function LogoutButton({ setLoggedIn }) {
       console.log("User logged out successfully");
 
       localStorage.clear()
-      navigate("/sign-up")
+      navigate("/login")
     } catch (error) {
       console.error("Error logging out:", error);
     }
