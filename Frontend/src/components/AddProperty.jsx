@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { FormControl, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel, Button } from '@mui/material';
 import FileUpload from "./fileUpload";
 import '../styles/FileUpload.css';
-import axios from 'axios';
 
 function AddProperty({User}) {
+
+  const navigateUser = useNavigate()
 
   const [formData, setFormData] = useState({
     property_title: "",
@@ -81,11 +82,10 @@ function AddProperty({User}) {
           property_address: "",
           property_types: "",
         });
-        const navigateUser = useNavigate()
 
         alert("Property successfully created!");
 
-        navigateUser("/my-properties")
+        navigateUser("/dashboard/my-properties")
       } else {
         console.error("Error creating property:", data);
       }
