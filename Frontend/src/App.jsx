@@ -44,6 +44,7 @@ function App() {
 
       {/* Sign Up route (outside dashboard layout) */}
       <Route path="/sign-up" element={<SignUp setUser={setUser}/>} />
+      <Route path="login" element={<LoginPage setUser={setUser}/> } />
     </Routes>
   );
 }
