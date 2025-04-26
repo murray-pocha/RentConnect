@@ -3,12 +3,12 @@ import Login from "./Login"
 import Header from './Header'
 import Footer from './Footer'
 
-function LoginPage() {
+function LoginPage({ setLoggedIn, setUser }) {
 
 return (
   <div>
     <Header />
-    <Login />
+    <Login setLoggedIn={setLoggedIn} setUser={setUser} />
     <Footer />
   </div>
 )
