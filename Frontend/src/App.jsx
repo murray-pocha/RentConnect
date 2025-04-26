@@ -43,7 +43,7 @@ function App() {
       </Route>
 
       {/* Sign Up route (outside dashboard layout) */}
-      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/sign-up" element={<SignUp setUser={setUser}/>} />
     </Routes>
   );
 }
