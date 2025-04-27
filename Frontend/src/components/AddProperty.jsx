@@ -5,12 +5,10 @@ import FileUpload from "./fileUpload";
 import '../styles/FileUpload.css';
 import axios from 'axios';
 
-<<<<<<< HEAD
-function AddProperty({ User }) {
-=======
-function AddProperty({User}) {
 
->>>>>>> develop
+function AddProperty({ User }) {
+
+
   const [formData, setFormData] = useState({
     property_title: "",
     property_description: "",
