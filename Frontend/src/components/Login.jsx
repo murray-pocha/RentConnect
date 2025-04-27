@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Login({ setLoggedIn, setUser }) {
+function Login({ setUser }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,8 +35,8 @@ function Login({ setLoggedIn, setUser }) {
       }
   
       const data = await response.json();
+      console.log("user", data.user)
       setUser(data.user)
-      setLoggedIn(true)
       localStorage.setItem("user", JSON.stringify(data.user)) 
       
       signUpNavigate("/dashboard")
