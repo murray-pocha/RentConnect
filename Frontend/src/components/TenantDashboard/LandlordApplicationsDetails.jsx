@@ -74,6 +74,7 @@ const LandlordApplicationDetails = () => {
               app.id === application.id ? { ...app, status: "Accepted" } : app
             );
             localStorage.setItem("landlordApplications", JSON.stringify(updatedApps));
+            navigate("/dashboard/landlord-applications")
           }}
           style={{
             marginRight: "1rem",
@@ -97,6 +98,7 @@ const LandlordApplicationDetails = () => {
               app.id === application.id ? { ...app, status: "Rejected" } : app
             );
             localStorage.setItem("landlordApplications", JSON.stringify(updatedApps));
+            navigate("/dashboard/landlord-applications")
           }}
           style={{
             padding: "0.5rem 1rem",

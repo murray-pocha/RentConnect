@@ -46,20 +46,16 @@ const LandlordApplications = () => {
   const navigate = useNavigate();
 
   const handleAccept = (id) => {
-    setApplications(prev => {
-      const updated = prev.map(app =>
-        app.id === id ? { ...app, status: "Accepted" } : app
-      );
+    setApplications((prev) => {
+      const updated = prev.filter((app) => app.id !== id);
       localStorage.setItem("landlordApplications", JSON.stringify(updated));
       return updated;
     });
   };
-
+  
   const handleReject = (id) => {
-    setApplications(prev => {
-      const updated = prev.map(app =>
-        app.id === id ? { ...app, status: "Rejected" } : app
-      );
+    setApplications((prev) => {
+      const updated = prev.filter((app) => app.id !== id); 
       localStorage.setItem("landlordApplications", JSON.stringify(updated));
       return updated;
     });
@@ -69,7 +65,8 @@ const LandlordApplications = () => {
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Tenant Applications</h1>
-      {applications.map((app) => (
+      {applications ? (
+        applications.map((app) => (
         <div
           key={app.id}
           style={{
@@ -106,7 +103,11 @@ const LandlordApplications = () => {
 
 
           <div style={{ marginTop: "0.5rem" }}>
-            <button onClick={() => handleAccept(app.id)} style={{ marginRight: "1rem" }}>
+            <button onClick={() => { 
+              handleAccept(app.id) 
+           }}
+              style={{ marginRight: "1rem" }}
+             >
               Accept
             </button>
             <button onClick={() => handleReject(app.id)}>
@@ -114,7 +115,9 @@ const LandlordApplications = () => {
             </button>
           </div>
         </div>
-      ))}
+      ))) : (
+        <h2>No open applications on any properties</h2>
+      )}
     </div>
   );
 };
