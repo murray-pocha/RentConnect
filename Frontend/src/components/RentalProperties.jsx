@@ -18,7 +18,10 @@ const RentalProperties = ({ User }) => {
   const [minBedrooms, setMinBedrooms] = useState("");
   const [selectedPropertyType, setSelectedPropertyType] = useState("");
   const [listings, setListings] = useState([]);
-  
+  const [geoLocation, setLocation] = useState({latitude: 43.6532, longitude: 79.3832});
+  const [error, setError] = useState(null);
+  const [distance, setDistance] = useState(1200)  
+
 
   const getProperties = async () => {
     try {
@@ -50,9 +53,7 @@ const RentalProperties = ({ User }) => {
     );
   });
 
-  const [geoLocation, setLocation] = useState(null);
-  const [error, setError] = useState(null);
-  const [distance, setDistance] = useState(100)
+  console.log('filtered listings', filteredListings)
 
   const navigateToProperty = useNavigate()
 
@@ -63,8 +64,7 @@ const RentalProperties = ({ User }) => {
           setLocation({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-          });
-        },
+          });        },
         (error) => {
           setError(error.message);
         }
@@ -75,7 +75,7 @@ const RentalProperties = ({ User }) => {
   }, []);
 
   const filteredMapListings = geoLocation
-  ? listings.filter((listing) => {
+  ? filteredListings.filter((listing) => {
       return (
         listing.latitude &&
         listing.longitude &&
@@ -179,8 +179,8 @@ const RentalProperties = ({ User }) => {
           </button>
         </div>
 
-        <UserLocation distance={ distance } setDistance={setDistance}/>
-        <LeafletMapContainer listings={filteredMapListings} />
+        <UserLocation distance={ distance } setDistance={ setDistance }/>
+        <LeafletMapContainer geoLocation={geoLocation} listings={filteredMapListings} />
 
         <div style={{ display: "grid", gap: "1.5rem" }}>
         {filteredListings.length > 0 ? (

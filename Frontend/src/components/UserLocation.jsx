@@ -1,9 +1,6 @@
 import React from "react";
-import { useState } from "react";
 
 function UserLocation ( { distance, setDistance } ) {
-
-
 
   return(
 
@@ -12,8 +9,8 @@ function UserLocation ( { distance, setDistance } ) {
       <input 
         type="range"
         id="distance_slider"
-        min={0}
-        max={5000}
+        min={100}
+        max={8000}
         step={150} 
         value={distance}
         onChange={(e) => setDistance(e.target.value)}
