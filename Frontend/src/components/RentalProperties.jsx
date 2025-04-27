@@ -8,13 +8,17 @@ import { haversineDistanceKM } from "../helpers/convertLatLong.js";
 import { get_all_rental_properties } from "../api/rentalEndpoints.js";
 import { useNavigate } from "react-router-dom";
 
-const RentalProperties = () => {
+
+
+const RentalProperties = ({ User }) => {
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [minBedrooms, setMinBedrooms] = useState("");
   const [selectedPropertyType, setSelectedPropertyType] = useState("");
   const [listings, setListings] = useState([]);
+  
 
   const getProperties = async () => {
     try {
@@ -194,13 +198,14 @@ const RentalProperties = () => {
               const handleApplyClick = () => handleApply(listing.id);
 
               return (
-                <div key={listing.id}>
-                  <PropertyCard
-                    listing={listing}
-                    onClick={handleClick}
-                    onApply={handleApplyClick}
-                  />
-                </div>
+                <PropertyCard
+                  key={listing.id}
+                  listing={listing}
+                  onClick={handleClick}
+                  onApply={handleApplyClick}
+                  isTenant={true}
+                  User={User}
+                />
               );
             }
             return null; // Return null if the condition is not met
