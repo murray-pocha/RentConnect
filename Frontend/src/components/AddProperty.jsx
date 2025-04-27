@@ -5,7 +5,12 @@ import FileUpload from "./fileUpload";
 import '../styles/FileUpload.css';
 import axios from 'axios';
 
+<<<<<<< HEAD
 function AddProperty({ User }) {
+=======
+function AddProperty({User}) {
+
+>>>>>>> develop
   const [formData, setFormData] = useState({
     property_title: "",
     property_description: "",
@@ -51,7 +56,6 @@ function AddProperty({ User }) {
       }
     }
 
-    // Hardcode user_id as 14
     formPayload.append("rental_property[user_id]", User.id);
 
     // Append files
