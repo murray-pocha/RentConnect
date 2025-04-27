@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FormControl, Button, FormControlLabel, Checkbox, FormHelperText, Input, InputLabel } from '@mui/material';
 import FileUpload from "./fileUpload";
 
-function AddProperty() {
+function AddProperty({User}) {
 
   const [formData, setFormData] = useState({
     property_title: "",
@@ -48,8 +48,7 @@ function AddProperty() {
       }
     }
 
-    // Hardcode user_id as 14
-    formPayload.append("rental_property[user_id]", 14);
+    formPayload.append("rental_property[user_id]", User.id);
 
     // Append files
     files.forEach((file) => {
