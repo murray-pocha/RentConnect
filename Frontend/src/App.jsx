@@ -9,6 +9,7 @@ import RentalProperties from "./components/RentalProperties";
 import AddProperty from './components/AddProperty';
 import RenterApplicationForm from "./components/TenantDashboard/RenterApplicationForm";
 import SignUp from "./components/SignUp";
+import MyProperties from "./components/MyProperties";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -37,7 +38,8 @@ function App() {
         <Route path="view-properties" element={<RentalProperties User={User} />} />
         <Route path="view-applications" element={<ViewApplications User={User}/>} />
         <Route path="renter-application" element={<RenterApplicationForm />} />
-        <Route path="add-property" element={<AddProperty />} />
+        <Route path="add-property" element={<AddProperty User={User}/>} />
+        <Route path="my-properties" element={<MyProperties User={User}/>}/>
         <Route path="account-settings" element={<div>Account Settings</div>} />
         <Route index element={<div>Welcome to your dashboard!</div>} />
       </Route>
