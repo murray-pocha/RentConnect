@@ -32,7 +32,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 Backend/config/credentials.yml.enc
-Frontend/.env
 
 #ignore database.yml as system runs on specific port for psql
 /config/database.yml
+
+# ignore credentials for specific development environment
+/config/credentials.yml.enc

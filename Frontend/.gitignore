@@ -24,6 +24,12 @@ dist-ssr
 *.sw?
 Backend/config/database.yml
 
+<<<<<<< HEAD
 Frontend/.env
 
 
+=======
+
+.env
+Frontend/.env
+>>>>>>> develop
