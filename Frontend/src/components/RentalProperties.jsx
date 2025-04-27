@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import PropertyCard from "./PropertyCard";
 import LeafletMapContainer from './ViewPropertiesDashboard/LeafletMapContainer'
@@ -22,6 +22,15 @@ const RentalProperties = ({ User }) => {
   const [error, setError] = useState(null);
   const [distance, setDistance] = useState(1200)  
 
+  const propertyRefs = useRef({});
+  console.log('propertyRefs', propertyRefs)
+
+  const scrollToProperty = (id) => {
+    if (propertyRefs.current[id]) {
+      propertyRefs.current[id].scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    console.log('scroll to property called')
+  };
 
   const getProperties = async () => {
     try {
@@ -52,10 +61,6 @@ const RentalProperties = ({ User }) => {
         selectedPropertyType.toLowerCase().trim())
     );
   });
-
-  console.log('filtered listings', filteredListings)
-
-  const navigateToProperty = useNavigate()
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -180,7 +185,11 @@ const RentalProperties = ({ User }) => {
         </div>
 
         <UserLocation distance={ distance } setDistance={ setDistance }/>
-        <LeafletMapContainer geoLocation={geoLocation} listings={filteredMapListings} />
+        <LeafletMapContainer 
+          onMarkerClick={scrollToProperty}
+          geoLocation={geoLocation} 
+          listings={filteredMapListings} 
+        />
 
         <div style={{ display: "grid", gap: "1.5rem" }}>
         {filteredListings.length > 0 ? (
@@ -198,14 +207,19 @@ const RentalProperties = ({ User }) => {
               const handleApplyClick = () => handleApply(listing.id);
 
               return (
-                <PropertyCard
+                <div
                   key={listing.id}
-                  listing={listing}
-                  onClick={handleClick}
-                  onApply={handleApplyClick}
-                  isTenant={true}
-                  User={User}
-                />
+                  ref={(el) => (propertyRefs.current[listing.id] = el)}
+                >
+                  <PropertyCard
+                    key={listing.id}
+                    listing={listing}
+                    onClick={handleClick}
+                    onApply={handleApplyClick}
+                    isTenant={true}
+                    User={User}
+                  />
+                </div>
               );
             }
             return null; // Return null if the condition is not met
