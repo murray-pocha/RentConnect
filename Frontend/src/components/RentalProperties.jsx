@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
 import PropertyCard from "./PropertyCard";
 import LeafletMapContainer from './ViewPropertiesDashboard/LeafletMapContainer'
+import UserLocation from "./UserLocation";
+
+import { haversineDistanceKM } from "../helpers/convertLatLong.js";
 import { get_all_rental_properties } from "../api/rentalEndpoints.js";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,7 +18,19 @@ const RentalProperties = ({ User }) => {
   const [minBedrooms, setMinBedrooms] = useState("");
   const [selectedPropertyType, setSelectedPropertyType] = useState("");
   const [listings, setListings] = useState([]);
-  
+  const [geoLocation, setLocation] = useState({latitude: 43.6532, longitude: 79.3832});
+  const [error, setError] = useState(null);
+  const [distance, setDistance] = useState(1200)  
+
+  const propertyRefs = useRef({});
+  console.log('propertyRefs', propertyRefs)
+
+  const scrollToProperty = (id) => {
+    if (propertyRefs.current[id]) {
+      propertyRefs.current[id].scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    console.log('scroll to property called')
+  };
 
   const getProperties = async () => {
     try {
@@ -44,6 +61,38 @@ const RentalProperties = ({ User }) => {
         selectedPropertyType.toLowerCase().trim())
     );
   });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });        },
+        (error) => {
+          setError(error.message);
+        }
+      );
+    } else {
+      setError('Geolocation is not supported by this browser.');
+    }
+  }, []);
+
+  const filteredMapListings = geoLocation
+  ? filteredListings.filter((listing) => {
+      return (
+        listing.latitude &&
+        listing.longitude &&
+        haversineDistanceKM(
+          geoLocation.latitude,
+          geoLocation.longitude,
+          listing.latitude,
+          listing.longitude
+        ) <= distance
+      );
+    })
+  : [];
 
   return (
     <div>
@@ -135,27 +184,50 @@ const RentalProperties = ({ User }) => {
           </button>
         </div>
 
+        <UserLocation distance={ distance } setDistance={ setDistance }/>
+        <LeafletMapContainer 
+          onMarkerClick={scrollToProperty}
+          geoLocation={geoLocation} 
+          listings={filteredMapListings} 
+        />
+
         <div style={{ display: "grid", gap: "1.5rem" }}>
-          {filteredListings.length > 0 ? (
-            filteredListings.map((listing) => {
-              const handleClick = () => console.log(listing);
+        {filteredListings.length > 0 ? (
+          filteredListings.map((listing) => {
+            if (
+              //checks user location and calculates distance with listings compared to
+              haversineDistanceKM(
+                geoLocation.latitude,
+                geoLocation.longitude,
+                listing.latitude,
+                listing.longitude
+              ) <= distance
+            ) {
+              const handleClick = () => navigateToProperty('/property/' + listing.id);
               const handleApplyClick = () => handleApply(listing.id);
 
               return (
-                <PropertyCard
+                <div
                   key={listing.id}
-                  listing={listing}
-                  onClick={handleClick}
-                  onApply={handleApplyClick}
-                  isTenant={true}
-                  User={User}
-                />
+                  ref={(el) => (propertyRefs.current[listing.id] = el)}
+                >
+                  <PropertyCard
+                    key={listing.id}
+                    listing={listing}
+                    onClick={handleClick}
+                    onApply={handleApplyClick}
+                    isTenant={true}
+                    User={User}
+                  />
+                </div>
               );
-            })
-          ) : (
-            <p>No properties match your filters.</p>
-          )}
-        </div>
+            }
+            return null; // Return null if the condition is not met
+          })
+        ) : (
+          <p>No properties match your filters.</p>
+        )}
+      </div>
 
         {/* ✅ MAP WRAPPED TO MATCH PAGE LAYOUT */}
         <div
@@ -165,7 +237,6 @@ const RentalProperties = ({ User }) => {
             overflow: "hidden",
           }}
         >
-          <LeafletMapContainer listings={listings} />
         </div>
       </div>
     </div>

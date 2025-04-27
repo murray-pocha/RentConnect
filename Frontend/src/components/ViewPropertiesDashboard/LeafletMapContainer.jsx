@@ -1,22 +1,19 @@
 import React from 'react'
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+import { getImageURL } from '../../helpers/getImageURL';
 import "leaflet/dist/leaflet.css";
 
 import { LocationPin } from '../../JS/LocationPin';
-import { useNavigate } from 'react-router-dom';
 
-
-function LeafletMapContainer({listings}) {
-    console.log("listings", listings);
-
-    const navigateToProperty = useNavigate()
+function LeafletMapContainer({ listings, geoLocation, onMarkerClick }) {
+    
 
     return (
         <MapContainer
             className="Leaflet_map"
             style={{ height: "800px" }}
-            center={[51.505, -0.09]}
-            zoom={2.25}
+            center={[53, -110]}
+            zoom={3}
             scrollWheelZoom={true}
         >
             <TileLayer
@@ -35,9 +32,10 @@ function LeafletMapContainer({listings}) {
                         >
                             <Popup>
                                 <img
+                                    onClick={() => {
+                                        onMarkerClick(listing.id)}}
                                     cursor="pointer"
-                                    onClick={() => navigateToProperty('property-page/' + listing.id)}
-                                    src={listing.image}
+                                    src={getImageURL(listing.property_types)}
                                     alt={listing.title}
                                     style={{ width: "100px", height: "100px" }}
                                 />
@@ -54,6 +52,9 @@ function LeafletMapContainer({listings}) {
                 }
                 return null; // Return null if latitude or longitude is missing
             })}
+            <Marker 
+                position={[geoLocation.latitude, geoLocation.longitude]}
+            />
         </MapContainer>
     );
 }
