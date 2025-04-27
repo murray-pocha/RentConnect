@@ -1,6 +1,6 @@
 import React from "react";
 import UserReview from "../UserReview";
-import { TextField } from "@mui/material";
+import { FormControl, TextField } from '@mui/material';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
@@ -22,9 +22,9 @@ function LandlordReviews({ feedback }) {
       </div>
         {/* {reviewButtonActive &&
           <div className="review_form">
-          <form>
+          <form id="review_form">
           {[...Array(5)].map((_, index) => (
-              index < review ? (
+              index < review.rating ? (
                 <StarRateRoundedIcon
                   key={index}
                   className="star_icon star filled"
@@ -42,14 +42,19 @@ function LandlordReviews({ feedback }) {
                 />
               )
             ))}
-            <TextField
-              id="outlined-multiline-static"
-              label="Write a review"
-              multiline
-              maxRows={8}
-              variant="standard"
-            />
-              <button type="submit">Submit review</button>
+            <FormControl margin="normal">
+              <TextField
+              className="outlined-multiline-static"
+                id="review"
+                label="Write a review"
+                multiline
+                maxRows={8}
+                variant="standard"
+                value={review.userReview}
+                onChange={handleChange}
+              />
+            </FormControl>
+              <button type="submit" onClick={handleSubmit}>Submit review</button>
           </form>
           </div>
         } */}
