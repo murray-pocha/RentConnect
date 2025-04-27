@@ -11,14 +11,14 @@ function Sidenav({ User }) {
     <div className="sidenav_container">
       {User.role === "tenant" ? (
         <div className="tenant">
-          <MyProfBtn to="/dashboard" />
+          <MyProfBtn to="/dashboard/profile-page" />
           <ViewPropertyBtn to="/dashboard/view-properties" />
           <MyApplicationsBtn to="/dashboard/view-applications" />
           <AccountSettingsBtn to="/dashboard/account-settings" />
         </div>
       ) : (
         <div className="landlord">
-          <MyProfBtn to="/dashboard" />
+          <MyProfBtn to="/dashboard/profile-page" />
           <MyProperties to="/dashboard/my-properties" />
           <AccountSettingsBtn to="/dashboard/account-settings" />
         </div>

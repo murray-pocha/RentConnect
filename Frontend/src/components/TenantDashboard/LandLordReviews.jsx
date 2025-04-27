@@ -8,16 +8,19 @@ function LandlordReviews({ feedback }) {
 
   const [reviewButtonActive, setReviewButtonActive] = React.useState(false)
   const [review, setReview] = React.useState(0)
+
   const handleStarClick = (index) => {
     setReview(index + 1)};
+
+  
  
   return (
     <>
       <div className="review_header">
         <h1>Reviews</h1>
-        <button onClick={() => setReviewButtonActive(!reviewButtonActive)}>Leave a review</button>
+        {/* <button onClick={() => setReviewButtonActive(!reviewButtonActive)}>Leave a review</button> */}
       </div>
-        {reviewButtonActive &&
+        {/* {reviewButtonActive &&
           <div className="review_form">
           <form>
           {[...Array(5)].map((_, index) => (
@@ -49,7 +52,7 @@ function LandlordReviews({ feedback }) {
               <button type="submit">Submit review</button>
           </form>
           </div>
-        }
+        } */}
         {feedback.map((review) => ( 
           <UserReview 
             key={review.id}

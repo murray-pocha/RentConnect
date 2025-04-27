@@ -3,17 +3,20 @@ import TenantHeader from "./TenantHeader";
 import ShareableLink from "./ShareableLink";
 import Landlordreviews from "./LandLordReviews"
 import "../../styles/TenantProfilePage.css";
-import { getAllFeedbacks, getFeedbackById } from "../../api/feedBackEndpoints";
+import { getAllFeedbacks } from "../../api/feedBackEndpoints";
 
 function TenantProfilePage({ User }) {
 
   const [feedback, setFeedback] = useState([])
+
+  console.log("User", User)
 
   const getFeedback = async () => {
     await getAllFeedbacks()
     .then(data => data
       .filter((feedback) => feedback.recipient_id === User.id))
     .then((filteredFeedback) => setFeedback(filteredFeedback))
+    .then(console.log("feedback", feedback))
     .catch((error) => console.error(error))
   }
 

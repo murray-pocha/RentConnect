@@ -37,6 +37,16 @@ john_user = User.create!(
   last_name: "Smith"
 )
 
+# Create a Demo Tenant for testing purposes
+demo_user = User.find_or_initialize_by(email: "demo@example.com")
+demo_user.update!(
+  password: "password",
+  first_name: "Demo",
+  last_name: "User",
+  role: "tenant"
+)
+puts "✅ Demo tenant user created or updated: #{demo_user.email}"
+
 # Create sample rental properties
 RentalProperty.create!(
   title: "Cozy Apartment in Downtown",
@@ -200,35 +210,76 @@ Feedback.create!([
     message: "Great communication and timely responses!",
     rating: 4,
     author_id: admin_user.id,
-    recipient_id: jane_user.id
+    recipient_id: demo_user.id
   },
   {
     message: "Very respectful and clean tenant.",
     rating: 5,
     author_id: jane_user.id,
-    recipient_id: admin_user.id
+    recipient_id: demo_user.id
   },
   {
     message: "Had some delays in payment but communicated well.",
     rating: 3,
     author_id: john_user.id,
-    recipient_id: admin_user.id
+    recipient_id: demo_user.id
   },
   {
     message: "Smooth renting experience, highly recommended.",
     rating: 4,
     author_id: admin_user.id,
-    recipient_id: john_user.id
+    recipient_id: demo_user.id
   }
 ])
 
-
-# Create a Demo Tenant for testing purposes
-demo_user = User.find_or_initialize_by(email: "demo@example.com")
-demo_user.update!(
-  password: "password",
-  first_name: "Demo",
-  last_name: "User",
-  role: "tenant"
-)
-puts "✅ Demo tenant user created or updated: #{demo_user.email}"
+# Create sample feedbacks
+Feedback.create!([
+  {
+    message: "Great communication and timely responses!",
+    rating: 5,
+    author_id: 50,
+    recipient_id: 53
+  },
+  {
+    message: "The property was well-maintained, but there were some delays in communication.",
+    rating: 4,
+    author_id: 51,
+    recipient_id: 53
+  },
+  {
+    message: "Had a pleasant experience overall. Would recommend!",
+    rating: 5,
+    author_id: 52,
+    recipient_id: 53
+  },
+  {
+    message: "The landlord was helpful, but the property needed some repairs.",
+    rating: 3,
+    author_id: 50,
+    recipient_id: 53
+  },
+  {
+    message: "Very professional and easy to work with.",
+    rating: 5,
+    author_id: 51,
+    recipient_id: 53
+  },
+  {
+    message: "The property was as described, but there were some minor issues.",
+    rating: 4,
+    author_id: 52,
+    recipient_id: 53
+  },
+  {
+    message: "Excellent experience! The landlord went above and beyond.",
+    rating: 5,
+    author_id: 50,
+    recipient_id: 53
+  },
+  {
+    message: "The landlord was responsive, but the property could have been cleaner.",
+    rating: 3,
+    author_id: 51,
+    recipient_id: 53
+  }
+])
