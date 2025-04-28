@@ -2,11 +2,10 @@ import React from "react";
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
-function StarRating({rating}) {
+function StarRating({ rating }) {
 
-  //rating will have to be passed in and handled here
-
-  const validRating = Math.round(rating) 
+  const validRating = Math.floor(rating)
+  
 
   return(
     <div className="rating">

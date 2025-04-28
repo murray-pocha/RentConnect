@@ -4,41 +4,23 @@ import { FormControl, TextField } from '@mui/material';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 
-function LandlordReviews({rating}) {
+function LandlordReviews({ feedback }) {
 
   const [reviewButtonActive, setReviewButtonActive] = React.useState(false)
-  const [review, setReview] = React.useState({
-    rating: 0,
-    review: ""
-  })
-
-  const handleChange = (event) => {
-    setReview({
-      ...review,
-      review: event.target.value,
-    });
-  };
+  const [review, setReview] = React.useState(0)
 
   const handleStarClick = (index) => {
-    setReview({
-      ...review,
-      rating: index + 1,
-    });
-  };;
+    setReview(index + 1)};
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("review submitted", review)
-  }
+  
  
   return (
     <>
       <div className="review_header">
         <h1>Reviews</h1>
-        <button onClick={() => setReviewButtonActive(!reviewButtonActive)}>Leave a review</button>
+        {/* <button onClick={() => setReviewButtonActive(!reviewButtonActive)}>Leave a review</button> */}
       </div>
-      {/* Renders stars based on review value */}
-        {reviewButtonActive &&
+        {/* {reviewButtonActive &&
           <div className="review_form">
           <form id="review_form">
           {[...Array(5)].map((_, index) => (
@@ -75,10 +57,16 @@ function LandlordReviews({rating}) {
               <button type="submit" onClick={handleSubmit}>Submit review</button>
           </form>
           </div>
-        }
-      <UserReview 
-        rating={rating}
-      />
+        } */}
+        {feedback.map((review) => ( 
+          <UserReview 
+            key={review.id}
+            rating={review.rating}
+            message={review.message}
+            author_id={review.author_id} // Corrected prop name
+            createdAt={review.created_at}
+          />
+        ))}
   </>
   )
 }

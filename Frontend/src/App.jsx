@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import "./App.css";
 import LoginPage from "./components/LoginPage";
@@ -10,12 +10,21 @@ import AddProperty from './components/AddProperty';
 import RenterApplicationForm from "./components/TenantDashboard/RenterApplicationForm";
 import SignUp from "./components/SignUp";
 import MyProperties from "./components/MyProperties";
+import TenantProfilePage from "./components/TenantDashboard/TenantProfilePage";
 import LandlordApplications from "./components/TenantDashboard/LandlordApplications";
 import LandlordApplicationDetails from "./components/TenantDashboard/LandlordApplicationsDetails";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [User, setUser] = useState(JSON.parse(localStorage.getItem("user")) || {});
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (User && User.id) {
+      setLoggedIn(true);
+      navigate('/dashboard/profile-page')
+    }
+  }, [User]);
 
   return (
     <Routes>
@@ -24,7 +33,7 @@ function App() {
         path="/"
         element={
           User && User.id ? (
-            <Navigate to="/dashboard" />
+            <Navigate to="/dashboard/profile-page" />
           ) : (
             <LoginPage setLoggedIn={setLoggedIn} setUser={setUser} />
           )
@@ -37,6 +46,7 @@ function App() {
         element={<TenantDashboard User={User} setLoggedIn={setLoggedIn} />}
       >
         {/* Nested routes inside dashboard layout */}
+        <Route path="profile-page" element={<TenantProfilePage User={User}/>}/>
         <Route path="view-properties" element={<RentalProperties User={User} />} />
         <Route path="view-applications" element={<ViewApplications User={User}/>} />
         <Route path="renter-application" element={<RenterApplicationForm />} />
