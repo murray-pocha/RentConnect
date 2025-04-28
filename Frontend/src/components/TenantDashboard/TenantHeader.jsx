@@ -17,7 +17,7 @@ function TenantHeader({ User, rating, feedbackAmount }) {
             <StarRating 
             rating={rating}
             />
-            <h3>( Average {rating} from {feedbackAmount} reviews )</h3>          
+            <h3>( Average {Math.round(rating * 10) /10 } from {feedbackAmount} reviews )</h3>          
             </div>
         </div>
         <div className="header_icons">
