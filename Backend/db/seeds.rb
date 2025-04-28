@@ -185,7 +185,8 @@ RentalApplication.create!(
   employer_name: "DevCo Ltd.",
   years_working_at_employer: 2,
   payment_type: "Credit",
-  rental_property_id: RentalProperty.find_by(title: "Cozy Apartment Downtown").id,
+feature/landlord-applications
+  rental_property_id: RentalProperty.find_by(title: "Cozy Apartment Downtown").id
   user_id: demo_user.id
 )
 
@@ -201,7 +202,7 @@ RentalApplication.create!(
   employer_name: "Bob's Plumbing",
   years_working_at_employer: 5,
   payment_type: "Credit",
-  rental_property_id: RentalProperty.find_by(title: "Cozy Suburban House").id,
+  rental_property_id: property3.id,
   user_id: demo_user.id
 )
 
@@ -213,13 +214,77 @@ Feedback.create!([
     message: "Great communication and timely responses!",
     rating: 4,
     author_id: admin_user.id,
-    recipient_id: jane_user.id
+    recipient_id: demo_user.id
   },
   {
     message: "Very respectful and clean tenant.",
     rating: 5,
     author_id: jane_user.id,
-    recipient_id: admin_user.id
+    recipient_id: demo_user.id
+  },
+  {
+    message: "Had some delays in payment but communicated well.",
+    rating: 3,
+    author_id: john_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "Smooth renting experience, highly recommended.",
+    rating: 4,
+    author_id: admin_user.id,
+    recipient_id: demo_user.id
+  }
+])
+
+# Create sample feedbacks
+Feedback.create!([
+  {
+    message: "Great communication and timely responses!",
+    rating: 5,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "The property was well-maintained, but there were some delays in communication.",
+    rating: 4,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "Had a pleasant experience overall. Would recommend!",
+    rating: 5,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "The landlord was helpful, but the property needed some repairs.",
+    rating: 3,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "Very professional and easy to work with.",
+    rating: 5,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "The property was as described, but there were some minor issues.",
+    rating: 4,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "Excellent experience! The landlord went above and beyond.",
+    rating: 5,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
+  },
+  {
+    message: "The landlord was responsive, but the property could have been cleaner.",
+    rating: 3,
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   }
 ])
 
