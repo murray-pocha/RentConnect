@@ -12,17 +12,22 @@ function TenantProfilePage({ User }) {
   console.log("User", User)
 
   const getFeedback = async () => {
-    await getAllFeedbacks()
-    .then(data => data
-      .filter((feedback) => feedback.recipient_id === User.id))
-    .then((filteredFeedback) => setFeedback(filteredFeedback))
-    .then(console.log("feedback", feedback))
-    .catch((error) => console.error(error))
-  }
+    try {
+      const data = await getAllFeedbacks();
+      console.log("Fetched feedback data:", data); // Debugging log
+      const filteredFeedback = data.filter((feedback) => feedback.recipient_id === User.id);
+      console.log("Filtered feedback:", filteredFeedback); // Debugging log
+      setFeedback(filteredFeedback);
+    } catch (error) {
+      console.error("Error fetching feedback:", error);
+    }
+  };
 
   useEffect(() => {
+    if(User && User.id) {
     getFeedback(User.id)
-  }, [User.id])
+    }
+  }, [User])
   
   const averageRating = (feedback) => {
     if(!feedback || feedback.length === 0) return 0

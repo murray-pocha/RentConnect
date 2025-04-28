@@ -37,22 +37,32 @@ john_user = User.create!(
   last_name: "Smith"
 )
 
-# Create a Demo Tenant for testing purposes
-demo_user = User.find_or_initialize_by(email: "demo@example.com")
-demo_user.update!(
+# Demo Tenant User
+demo_user = User.create!(
+  email: "demo@example.com",
   password: "password",
   first_name: "Demo",
   last_name: "User",
-  role: "tenant"
+  role: 0
 )
-puts "✅ Demo tenant user created or updated: #{demo_user.email}"
 
-# Create sample rental properties
-RentalProperty.create!(
-  title: "Cozy Apartment in Downtown",
-  description: "A beautiful and cozy apartment located in the heart of downtown.",
-  address: "123 Main Street, New York, NY 10001",
-  sq_feet: 850,
+# Demo Landlord User
+landlord_user = User.create!(
+  email: "landlord@example.com",
+  password: "password",
+  first_name: "Landlord",
+  last_name: "Example",
+  role: 1
+)
+
+puts "✅ Demo users created"
+
+# Create sample rental properties for landlord
+property1 = RentalProperty.create!(
+  title: "Sunny Apartment Downtown",
+  description: "Bright and spacious downtown apartment.",
+  address: "100 Main St, Cityville",
+  sq_feet: 900,
   bedrooms: 2,
   bathrooms: 1,
   property_types: "Apartment",
@@ -102,7 +112,7 @@ RentalApplication.create!(
   employer_name: "DevCo Ltd.",
   years_working_at_employer: 2,
   payment_type: "Credit",
-  rental_property_id: property1.id,
+  rental_property_id: property2.id,
   user_id: demo_user.id
 )
 
@@ -118,7 +128,7 @@ RentalApplication.create!(
   employer_name: "Bob's Plumbing",
   years_working_at_employer: 5,
   payment_type: "Credit",
-  rental_property_id: property2.id,
+  rental_property_id: property3.id,
   user_id: demo_user.id
 )
 
@@ -157,49 +167,51 @@ Feedback.create!([
   {
     message: "Great communication and timely responses!",
     rating: 5,
-    author_id: 50,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   },
   {
     message: "The property was well-maintained, but there were some delays in communication.",
     rating: 4,
-    author_id: 51,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   },
   {
     message: "Had a pleasant experience overall. Would recommend!",
     rating: 5,
-    author_id: 52,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   },
   {
     message: "The landlord was helpful, but the property needed some repairs.",
     rating: 3,
-    author_id: 50,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   },
   {
     message: "Very professional and easy to work with.",
     rating: 5,
-    author_id: 51,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   },
   {
     message: "The property was as described, but there were some minor issues.",
     rating: 4,
-    author_id: 52,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   },
   {
     message: "Excellent experience! The landlord went above and beyond.",
     rating: 5,
-    author_id: 50,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   },
   {
     message: "The landlord was responsive, but the property could have been cleaner.",
     rating: 3,
-    author_id: 51,
-    recipient_id: 53
+    author_id: jane_user.id,
+    recipient_id: demo_user.id
   }
 ])
+
+puts "✅ Feedbacks created"
