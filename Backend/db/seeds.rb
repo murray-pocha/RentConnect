@@ -185,8 +185,7 @@ RentalApplication.create!(
   employer_name: "DevCo Ltd.",
   years_working_at_employer: 2,
   payment_type: "Credit",
-feature/landlord-applications
-  rental_property_id: RentalProperty.find_by(title: "Cozy Apartment Downtown").id
+  rental_property_id: RentalProperty.find_by(title: "Cozy Apartment Downtown").id,
   user_id: demo_user.id
 )
 
@@ -202,7 +201,7 @@ RentalApplication.create!(
   employer_name: "Bob's Plumbing",
   years_working_at_employer: 5,
   payment_type: "Credit",
-  rental_property_id: property3.id,
+  rental_property_id: RentalProperty.find_by(title: "Cozy Apartment Downtown").id,
   user_id: demo_user.id
 )
 
